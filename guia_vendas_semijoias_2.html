@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Guia de Vendas — Semijoias</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f4f0; color: #1a1a1a; min-height: 100vh; }
+  .header { background: #1a1a1a; color: #fff; padding: 1.25rem 1rem 1rem; position: sticky; top: 0; z-index: 50; }
+  .header h1 { font-size: 17px; font-weight: 600; margin-bottom: 10px; }
+  .header p { font-size: 12px; color: #aaa; margin-bottom: 10px; }
+  .search-bar { width: 100%; padding: 10px 14px; border: none; border-radius: 10px; font-size: 15px; background: #2e2e2e; color: #fff; outline: none; }
+  .search-bar::placeholder { color: #888; }
+  .tabs { display: flex; gap: 6px; padding: 12px 1rem; overflow-x: auto; background: #fff; border-bottom: 0.5px solid #e0e0e0; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { padding: 6px 14px; border-radius: 20px; font-size: 13px; border: 1px solid #ddd; background: #f5f4f0; color: #555; cursor: pointer; white-space: nowrap; font-weight: 500; }
+  .tab.active { background: #1a1a1a; color: #fff; border-color: transparent; }
+  .content { padding: 12px 1rem 80px; }
+  .section-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.6px; margin: 16px 0 8px; font-weight: 600; }
+  .card { background: #fff; border: 0.5px solid #e5e5e5; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; transition: box-shadow 0.15s; }
+  .card:active { box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .card-title { font-size: 14px; font-weight: 600; color: #1a1a1a; line-height: 1.4; }
+  .card-tag { font-size: 11px; padding: 3px 9px; border-radius: 10px; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+  .tag-objection { background: #FAECE7; color: #8B3520; }
+  .tag-followup { background: #E6F1FB; color: #1A5C9C; }
+  .tag-dor { background: #EAF3DE; color: #2E6010; }
+  .tag-fechamento { background: #FAEEDA; color: #7A4A0A; }
+  .card-preview { font-size: 13px; color: #777; margin-top: 6px; line-height: 1.5; }
+  .empty { text-align: center; padding: 3rem 1rem; color: #aaa; font-size: 14px; line-height: 1.8; }
+  .empty span { font-size: 32px; display: block; margin-bottom: 8px; }
+
+  /* Modal */
+  .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: flex-end; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: #fff; border-radius: 20px 20px 0 0; padding: 1.25rem 1.25rem 2rem; width: 100%; max-height: 85vh; overflow-y: auto; animation: slideUp 0.2s ease; }
+  @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-drag { width: 40px; height: 4px; background: #e0e0e0; border-radius: 4px; margin: 0 auto 1.25rem; }
+  .modal-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .modal-title { font-size: 16px; font-weight: 700; color: #1a1a1a; flex: 1; padding-right: 8px; line-height: 1.4; }
+  .close-btn { background: #f0f0f0; border: none; border-radius: 50%; width: 30px; height: 30px; font-size: 16px; cursor: pointer; color: #555; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .modal-tag { font-size: 11px; padding: 3px 10px; border-radius: 10px; font-weight: 600; display: inline-block; margin-bottom: 14px; }
+  .modal-body { font-size: 14px; color: #333; line-height: 1.9; white-space: pre-wrap; background: #f9f8f5; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; border: 0.5px solid #eee; }
+  .modal-tip { font-size: 12px; color: #999; margin-bottom: 14px; font-style: italic; }
+  .copy-btn { width: 100%; padding: 14px; border-radius: 12px; background: #1a1a1a; color: #fff; border: none; font-size: 15px; font-weight: 600; cursor: pointer; letter-spacing: 0.3px; }
+  .copy-btn.copied { background: #2E6010; }
+
+  .count-badge { font-size: 12px; color: #aaa; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Guia de Vendas — Semijoias</h1>
+  <p>Clica na situação e copia o script pronto</p>
+  <input class="search-bar" type="search" id="search" placeholder="Buscar... ex: desbota, preço, follow-up" oninput="renderCards()" />
+</div>
+
+<div class="tabs" id="tabs">
+  <div class="tab active" onclick="setTab('todos', this)">Todos</div>
+  <div class="tab" onclick="setTab('objection', this)">Objeções</div>
+  <div class="tab" onclick="setTab('followup', this)">Follow-up</div>
+  <div class="tab" onclick="setTab('fechamento', this)">Fechamento</div>
+  <div class="tab" onclick="setTab('dor', this)">Dores</div>
+</div>
+
+<div class="content">
+  <div class="count-badge" id="count-badge"></div>
+  <div id="cards-container"></div>
+</div>
+
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal-inner">
+    <div class="modal-drag"></div>
+    <div class="modal-top">
+      <div class="modal-title" id="modal-title"></div>
+      <button class="close-btn" onclick="closeModalDirect()">&#x2715;</button>
+    </div>
+    <span class="modal-tag" id="modal-tag"></span>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-tip">Substitua [nome] pelo nome real do cliente antes de enviar.</div>
+    <button class="copy-btn" onclick="copyScript()" id="copy-btn">Copiar script</button>
+  </div>
+</div>
+
+<script>
+const data = [
+  {
+    id: 1, type: "objection", tag: "Confiança na loja",
+    title: "Cliente desconfia da loja",
+    preview: "\"Essa loja entrega mesmo? É confiável?\"",
+    script: `[Nome], eu entendo que você está inseguro — e faz todo sentido ter essa preocupação.
+
+Por isso, se quiser, a gente pode fazer uma videochamada rápida. Posso te mostrar o estoque, a loja, tudo certinho, pra você ficar 100% seguro de que está comprando em um lugar que oferece qualidade, procedência e que entrega certinho.
+
+O que você acha? 😊`
+  },
+  {
+    id: 2, type: "objection", tag: "Garantia (geral)",
+    title: "Cliente pergunta sobre garantia",
+    preview: "\"Tem garantia? Quanto tempo dura?\"",
+    script: `[Nome], pode ficar totalmente tranquilo quanto à garantia das nossas peças.
+
+A gente só trabalha com produtos de alta qualidade, feitos pra ter durabilidade real. É comum as peças durarem bem mais de um ano sem nenhum problema.
+
+Inclusive, muitos clientes nossos comentam que as peças continuam em ótimo estado mesmo depois desse tempo.
+
+Pode confiar — você vai estar investindo em algo que realmente vale a pena.`
+  },
+  {
+    id: 3, type: "objection", tag: "Garantia (com prazo)",
+    title: "Cliente quer prazo exato de garantia",
+    preview: "\"Mas qual é o prazo oficial de garantia?\"",
+    script: `[Nome], pode ficar tranquilo.
+
+Aqui trabalhamos apenas com produtos de procedência, com alta durabilidade e garantia com certificado.
+
+Nossas peças têm 6 meses de garantia direto do fabricante — mas a verdade é que elas costumam durar bem mais que isso. Muitos clientes relatam uso acima de 1 ano sem nenhum problema.
+
+Ou seja, você está levando uma peça de qualidade, feita pra durar.`
+  },
+  {
+    id: 4, type: "objection", tag: "Concorrência / preço",
+    title: "\"Vi em outra loja mais barato\"",
+    preview: "Cliente compara com concorrente mais barato",
+    script: `Entendo [nome], e é bom você comparar mesmo.
+
+O que posso te dizer é que aqui trabalhamos com peças de alta qualidade, com padrão diferenciado da concorrência. Não é à toa que muitos clientes que compravam em outros lugares comentam que a qualidade não se compara com a nossa.
+
+A diferença está no padrão de fabricação — a qualidade e a durabilidade são bem superiores. Vale a comparação antes de decidir.`
+  },
+  {
+    id: 5, type: "objection", tag: "Preço caro",
+    title: "\"Tá caro\" / \"Não vale isso\"",
+    preview: "Cliente diz que o preço está alto demais",
+    script: `[Nome], a gente até conseguiria oferecer um preço menor — mas pra isso teríamos que trabalhar com produtos de qualidade inferior, entende?
+
+Como aqui a gente preza pela durabilidade e qualidade, não conseguimos baixar mais que isso. Nosso padrão é diferenciado em relação à concorrência.
+
+Tenho certeza que você não vai se arrepender e vai voltar a comprar. 😊`
+  },
+  {
+    id: 6, type: "objection", tag: "Estilo / indecisão",
+    title: "Cliente inseguro se vai combinar com ele",
+    preview: "\"Não sei se combina comigo, não uso acessório\"",
+    script: `[Nome], essa peça é realmente diferenciada. Ao vivo ela tem um brilho e um caimento que não aparece totalmente na foto — tenho certeza que não vai se arrepender.
+
+Se quiser, posso te mandar uma foto dela sendo usada pra você visualizar melhor antes de decidir. 😊`
+  },
+  {
+    id: 7, type: "objection", tag: "Cor diferente",
+    title: "Cliente recebe e a cor parece diferente",
+    preview: "\"A cor chegou diferente do que eu esperava\"",
+    script: `[Nome], a diferença na cor acontece porque o pingente puxa mais pro ouro 18k e a corrente pro ouro 24k — ou o inverso.
+
+Ambas têm tonalidade de ouro, só que em intensidades ligeiramente diferentes. Se pesquisar, você vai ver que o ouro 24k é mesmo diferente do 18k visualmente.
+
+Isso não muda o fato de a peça continuar bonita e com qualidade. Qualquer dúvida, pode me chamar que a gente resolve!`
+  },
+  {
+    id: 8, type: "objection", tag: "Tamanho / ajuste",
+    title: "Cliente quer tamanho diferente",
+    preview: "\"Mas eu curto menor / maior\"",
+    script: `[Nome], esse modelo fica excelente pra homem, com ótimo caimento — tenho certeza que vai gostar.
+
+Mas se preferir um tamanho diferente, sem problema: em toda cidade tem pessoas que fazem esse ajuste, cobram em torno de R$ 5 a R$ 10. É rápido e simples. 😊`
+  },
+  {
+    id: 9, type: "objection", tag: "Pode molhar?",
+    title: "Cliente pergunta se pode molhar",
+    preview: "\"Posso tomar banho usando? Pode molhar?\"",
+    script: `[Nome], a semijoia tem mais durabilidade quando evita contato com água, suor e produtos químicos (perfume, sabonete, cloro).
+
+Pra garantir que dure bastante, o ideal é tirar antes do banho e guardar num local seco.
+
+Com esse cuidado simples, a peça dura muito mais e continua linda por muito tempo. 😊`
+  },
+  {
+    id: 10, type: "followup", tag: "D0 — 2 a 4h",
+    title: "Follow-up D0 — cliente sumiu no mesmo dia",
+    preview: "Mandar 2 a 4 horas após o cliente parar de responder",
+    script: `Oiii [nome], conseguiu ver o que eu te mandei ali em cima?
+
+Se quiser, posso te mandar fotos dos modelos que mais saem aqui na loja pra você dar uma olhadinha 🙂`
+  },
+  {
+    id: 11, type: "followup", tag: "D1 — 1 dia",
+    title: "Follow-up D1 — 1 dia depois",
+    preview: "Mandar 1 dia após o primeiro contato",
+    script: `Boa tarde, [nome]!
+
+Esqueci de te falar ontem — na sua primeira compra, se o pagamento for no Pix, ainda consigo te dar um desconto especial 😊
+
+Basta escolher o modelo do seu interesse que te passo quanto fica com o desconto.`
+  },
+  {
+    id: 12, type: "followup", tag: "D3 — 3 dias",
+    title: "Follow-up D3 — 3 dias depois",
+    preview: "Mandar foto da peça com mensagem leve e descontraída",
+    script: `[Manda uma foto da peça que ele demonstrou interesse e escreve:]
+
+Saudades do que a gente não viveu ainda... 😄
+
+Aqui te esperando, [nome]!`
+  },
+  {
+    id: 13, type: "followup", tag: "D4 — 4 dias",
+    title: "Follow-up D4 — 4 dias depois (oferta)",
+    preview: "Oferta com urgência — válida só hoje",
+    script: `[Manda uma foto do produto e escreve:]
+
+Mas cara, esqueceu de mim né? kkk — mas eu lembrei de você! 😊
+
+To com uma condição especial no modelo que você tem interesse. Hoje ele tá saindo de R$[valor original] por apenas R$[valor com desconto], mas essa condição é válida só hoje 😉
+
+Posso separar a sua?`
+  },
+  {
+    id: 14, type: "followup", tag: "D6 — encerramento",
+    title: "Follow-up D6 — última tentativa",
+    preview: "6 dias após o primeiro contato — encerrar com elegância",
+    script: `Oi [nome], pelos contatos sem resposta, entendo que você não tem mais interesse na oferta especial.
+
+Então estou finalizando meu contato por aqui 🙁
+
+Se mudar de ideia, é só me chamar. Obrigada!`
+  },
+  {
+    id: 15, type: "fechamento", tag: "Urgência / escassez",
+    title: "Gerar urgência pra fechar",
+    preview: "Cliente está quase decidindo mas enrolando",
+    script: `[Nome], tenho ela disponível aqui — mas está com poucas unidades.
+
+Tenta me confirmar o quanto antes que eu já deixo separada pra você, tá bom? 😊`
+  },
+  {
+    id: 16, type: "fechamento", tag: "Qualidade ao vivo",
+    title: "Qualidade que não aparece na foto",
+    preview: "Cliente hesita por não saber como é ao vivo",
+    script: `[Nome], essa peça tá linda mesmo — pessoalmente ela fica ainda mais bonita do que na foto.
+
+Tenho certeza que vai gostar muito. 😊`
+  },
+  {
+    id: 17, type: "fechamento", tag: "Reforço de escolha",
+    title: "Confirmar que o cliente fez boa escolha",
+    preview: "Quando o cliente acabou de escolher uma peça",
+    script: `Ótima escolha! Essa peça é bem diferenciada — é uma das que mais saem aqui, não é à toa.
+
+Tenho certeza que você vai se destacar com ela. 😊`
+  },
+  {
+    id: 18, type: "fechamento", tag: "Exclusividade",
+    title: "Criar senso de exclusividade",
+    preview: "Para peças de linha mais selecionada",
+    script: `Essa é de uma linha mais selecionada — não tenho muitas unidades disponíveis.
+
+Caso tenha interesse, me confirma rápido pra eu garantir a sua. 😊`
+  },
+  {
+    id: 19, type: "fechamento", tag: "Consultiva",
+    title: "Entender preferência do cliente",
+    preview: "Quando o cliente não sabe o que quer",
+    script: `Você tem preferência em correntes mais robustas, mais finas/discretas ou algo no meio?
+
+Assim consigo te indicar a que mais vai combinar com seu estilo. 😊`
+  },
+  {
+    id: 20, type: "dor", tag: "Medo de bijuteria barata",
+    title: "Medo de parecer bijuteria / coisa de qualidade baixa",
+    preview: "\"Na foto é bonito, mas ao vivo deve ser fraco\"",
+    script: `O cliente quer usar acessório pra parecer mais alinhado e com mais presença. O maior medo é colocar no corpo e ficar com cara de coisa barata.
+
+Como quebrar esse medo:
+→ Manda vídeo mostrando a peça ao vivo, com iluminação natural
+→ Fala do peso e acabamento da peça
+→ Mostra foto de cliente real usando
+→ Reforça: "pessoalmente ela fica ainda melhor que na foto"
+→ Oferece videochamada se ele insistir em duvidar`
+  },
+  {
+    id: 21, type: "dor", tag: "Medo de desbotar",
+    title: "Medo de a peça desbotar ou descascar",
+    preview: "\"Quanto tempo dura? Vai perder a cor?\"",
+    script: `Esse é o medo racional mais forte. Ele já comprou peça ruim antes e entra desconfiado.
+
+Como quebrar esse medo:
+→ Fala da procedência e do processo de banho
+→ Dá um prazo real ("a maioria dos nossos clientes usa mais de 1 ano sem problema")
+→ Orienta sobre cuidados simples: evitar água, suor, produtos químicos
+→ Se tiver garantia, reforça isso com segurança`
+  },
+  {
+    id: 22, type: "dor", tag: "Medo de não combinar",
+    title: "Medo de não combinar com o estilo dele",
+    preview: "\"Não sou acostumado a usar acessório\"",
+    script: `Ele não quer "usar acessório" — ele quer "ter mais presença". Não quer parecer artificial.
+
+Como quebrar esse medo:
+→ Pergunta o estilo dele antes de indicar a peça
+→ Mostra peças em uso no corpo (não só fundo branco)
+→ Orienta combinações: "essa corrente fina vai bem com qualquer roupa, discreta mas com presença"
+→ Diz que é uma das que mais saem pra homens com o perfil dele`
+  },
+  {
+    id: 23, type: "dor", tag: "Medo de golpe",
+    title: "Medo de tomar golpe / loja não confiável",
+    preview: "Objeção silenciosa — ele não fala mas pensa",
+    script: `Essa objeção raramente é falada, mas trava muito — principalmente no Instagram.
+
+Como quebrar esse medo:
+→ Tem prints de clientes satisfeitos no perfil (stories, destaques)
+→ Oferece videochamada pra mostrar o estoque ao vivo
+→ Mostra avaliações e depoimentos reais
+→ Reforça: "pode checar nosso perfil, temos muitos clientes atendidos"`
+  },
+  {
+    id: 24, type: "dor", tag: "Medo de pagar e não valer",
+    title: "Medo de pagar e não valer o preço",
+    preview: "\"É bonito, mas vale isso mesmo?\"",
+    script: `Como semijoia não é necessidade, ela precisa parecer justificável pro cliente.
+
+O que trava: ele não enxerga valor suficiente. Preço não assusta — o que assusta é não enxergar valor.
+
+Como quebrar:
+→ Mostra o que ele está comprando de verdade: presença, imagem, destaque
+→ Compara com o que ele gastaria em outros produtos de valor similar
+→ Reforça durabilidade e qualidade
+→ Mostra depoimentos de quem comprou e ficou satisfeito`
+  }
+];
+
+let currentTab = "todos";
+let currentItem = null;
+
+function setTab(tab, el) {
+  currentTab = tab;
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  el.classList.add("active");
+  renderCards();
+}
+
+function getTagClass(type) {
+  return { objection: "tag-objection", followup: "tag-followup", dor: "tag-dor", fechamento: "tag-fechamento" }[type] || "tag-objection";
+}
+
+function getTagLabel(type) {
+  return { objection: "Objeção", followup: "Follow-up", dor: "Dor do cliente", fechamento: "Fechamento" }[type] || type;
+}
+
+function renderCards() {
+  const q = document.getElementById("search").value.toLowerCase().trim();
+  let filtered = data;
+  if (currentTab !== "todos") filtered = filtered.filter(d => d.type === currentTab);
+  if (q) filtered = filtered.filter(d =>
+    d.title.toLowerCase().includes(q) ||
+    d.preview.toLowerCase().includes(q) ||
+    d.tag.toLowerCase().includes(q) ||
+    d.script.toLowerCase().includes(q)
+  );
+
+  document.getElementById("count-badge").textContent = filtered.length + " resultado" + (filtered.length !== 1 ? "s" : "");
+
+  const container = document.getElementById("cards-container");
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="empty"><span>🔍</span>Nenhum resultado encontrado.<br>Tente outra palavra-chave.</div>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(item => `
+    <div class="card" onclick="openModal(${item.id})">
+      <div class="card-header">
+        <div class="card-title">${item.title}</div>
+        <span class="card-tag ${getTagClass(item.type)}">${item.tag}</span>
+      </div>
+      <div class="card-preview">${item.preview}</div>
+    </div>
+  `).join("");
+}
+
+function openModal(id) {
+  currentItem = data.find(d => d.id === id);
+  document.getElementById("modal-title").textContent = currentItem.title;
+  const tag = document.getElementById("modal-tag");
+  tag.textContent = getTagLabel(currentItem.type);
+  tag.className = "modal-tag " + getTagClass(currentItem.type);
+  document.getElementById("modal-body").textContent = currentItem.script;
+  const btn = document.getElementById("copy-btn");
+  btn.textContent = "Copiar script";
+  btn.classList.remove("copied");
+  document.getElementById("modal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById("modal")) closeModalDirect();
+}
+
+function closeModalDirect() {
+  document.getElementById("modal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+function copyScript() {
+  if (!currentItem) return;
+  navigator.clipboard.writeText(currentItem.script).then(() => {
+    const btn = document.getElementById("copy-btn");
+    btn.textContent = "Copiado!";
+    btn.classList.add("copied");
+    setTimeout(() => {
+      btn.textContent = "Copiar script";
+      btn.classList.remove("copied");
+    }, 2500);
+  }).catch(() => {
+    const ta = document.createElement("textarea");
+    ta.value = currentItem.script;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    document.getElementById("copy-btn").textContent = "Copiado!";
+    setTimeout(() => { document.getElementById("copy-btn").textContent = "Copiar script"; }, 2500);
+  });
+}
+
+renderCards();
+</script>
+</body>
+</html>
