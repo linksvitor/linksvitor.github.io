@@ -14,10 +14,9 @@
   .search-bar::placeholder { color: #888; }
   .tabs { display: flex; gap: 6px; padding: 12px 1rem; overflow-x: auto; background: #fff; border-bottom: 0.5px solid #e0e0e0; }
   .tabs::-webkit-scrollbar { display: none; }
-  .tab { padding: 6px 14px; border-radius: 20px; font-size: 13px; border: 1px solid #ddd; background: #f5f4f0; color: #555; cursor: pointer; white-space: nowrap; font-weight: 500; }
+  .tab { padding: 6px 14px; border-radius: 20px; font-size: 13px; border: 1px solid #ddd; background: #f5f4f0; color: #555; cursor: pointer; white-space: nowrap; font-weight: 500; flex-shrink: 0; }
   .tab.active { background: #1a1a1a; color: #fff; border-color: transparent; }
   .content { padding: 12px 1rem 80px; }
-  .section-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.6px; margin: 16px 0 8px; font-weight: 600; }
   .card { background: #fff; border: 0.5px solid #e5e5e5; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; transition: box-shadow 0.15s; }
   .card:active { box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
   .card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
@@ -27,11 +26,24 @@
   .tag-followup { background: #E6F1FB; color: #1A5C9C; }
   .tag-dor { background: #EAF3DE; color: #2E6010; }
   .tag-fechamento { background: #FAEEDA; color: #7A4A0A; }
+  .tag-upsell { background: #F5C4B3; color: #712B13; }
+  .tag-pgto { background: #FAC775; color: #633806; }
+  .tag-frio { background: #B5D4F4; color: #0C447C; }
+  .tag-posvenda { background: #C0DD97; color: #27500A; }
   .card-preview { font-size: 13px; color: #777; margin-top: 6px; line-height: 1.5; }
+  .card-when { font-size: 11px; color: #bbb; margin-top: 4px; }
   .empty { text-align: center; padding: 3rem 1rem; color: #aaa; font-size: 14px; line-height: 1.8; }
   .empty span { font-size: 32px; display: block; margin-bottom: 8px; }
-
-  /* Modal */
+  .count-badge { font-size: 12px; color: #aaa; margin-bottom: 4px; }
+  .regra-box { border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; font-size: 12px; line-height: 1.7; }
+  .regra-amarela { background: #fff8e6; border-left: 3px solid #f0b429; color: #7a4a0a; }
+  .regra-amarela strong { color: #5a3200; display: block; margin-bottom: 2px; }
+  .regra-vermelha { background: #fff3f0; border-left: 3px solid #D85A30; color: #7a2a10; }
+  .regra-vermelha strong { color: #5a1800; display: block; margin-bottom: 2px; }
+  .regra-azul { background: #e8f4ff; border-left: 3px solid #378ADD; color: #0c447c; }
+  .regra-azul strong { color: #042C53; display: block; margin-bottom: 2px; }
+  .regra-verde { background: #eafaf3; border-left: 3px solid #1D9E75; color: #085041; }
+  .regra-verde strong { color: #04342C; display: block; margin-bottom: 2px; }
   .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: flex-end; }
   .modal-overlay.open { display: flex; }
   .modal { background: #fff; border-radius: 20px 20px 0 0; padding: 1.25rem 1.25rem 2rem; width: 100%; max-height: 85vh; overflow-y: auto; animation: slideUp 0.2s ease; }
@@ -41,19 +53,14 @@
   .modal-title { font-size: 16px; font-weight: 700; color: #1a1a1a; flex: 1; padding-right: 8px; line-height: 1.4; }
   .close-btn { background: #f0f0f0; border: none; border-radius: 50%; width: 30px; height: 30px; font-size: 16px; cursor: pointer; color: #555; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .modal-tag { font-size: 11px; padding: 3px 10px; border-radius: 10px; font-weight: 600; display: inline-block; margin-bottom: 14px; }
-  .modal-when { font-size: 12px; color: #888; background: #f5f4f0; border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; line-height: 1.5; border-left: 3px solid #ddd; }
-  .modal-when strong { color: #555; }
+  .modal-when { font-size: 12px; color: #555; background: #f0f4ff; border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; line-height: 1.6; border-left: 3px solid #a0b8f0; }
   .modal-body { font-size: 14px; color: #333; line-height: 1.9; white-space: pre-wrap; background: #f9f8f5; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; border: 0.5px solid #eee; }
-  .modal-why { font-size: 12px; color: #888; font-style: italic; margin-bottom: 14px; padding: 0 2px; line-height: 1.6; }
+  .modal-why { font-size: 12px; color: #777; font-style: italic; margin-bottom: 12px; line-height: 1.6; }
+  .modal-rules { font-size: 12px; color: #555; background: #f5f4f0; border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; line-height: 1.8; }
+  .modal-rules strong { color: #1a1a1a; display: block; margin-bottom: 4px; font-size: 12px; }
   .modal-tip { font-size: 12px; color: #999; margin-bottom: 14px; font-style: italic; }
-  .modal-rules { font-size: 12px; color: #666; background: #f0f4ff; border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; line-height: 1.8; }
-  .modal-rules strong { color: #1A5C9C; display: block; margin-bottom: 4px; }
   .copy-btn { width: 100%; padding: 14px; border-radius: 12px; background: #1a1a1a; color: #fff; border: none; font-size: 15px; font-weight: 600; cursor: pointer; letter-spacing: 0.3px; }
   .copy-btn.copied { background: #2E6010; }
-  .count-badge { font-size: 12px; color: #aaa; margin-bottom: 4px; }
-
-  /* Stepper visual no modal */
-  .step-pill { display: inline-block; font-size: 10px; font-weight: 700; background: #E6F1FB; color: #1A5C9C; padding: 2px 8px; border-radius: 10px; margin-bottom: 6px; letter-spacing: 0.3px; }
 </style>
 </head>
 <body>
@@ -70,9 +77,14 @@
   <div class="tab" onclick="setTab('followup', this)">Follow-up</div>
   <div class="tab" onclick="setTab('fechamento', this)">Fechamento</div>
   <div class="tab" onclick="setTab('dor', this)">Dores</div>
+  <div class="tab" onclick="setTab('upsell', this)">Upsell</div>
+  <div class="tab" onclick="setTab('pgto', this)">Pgto pendente</div>
+  <div class="tab" onclick="setTab('frio', this)">Leads frios</div>
+  <div class="tab" onclick="setTab('posvenda', this)">Pós-venda</div>
 </div>
 
 <div class="content">
+  <div id="regra-area"></div>
   <div class="count-badge" id="count-badge"></div>
   <div id="cards-container"></div>
 </div>
@@ -96,644 +108,148 @@
 
 <script>
 const data = [
-  // ── OBJEÇÕES ──────────────────────────────────────────────────────────────
-  {
-    id: 1, type: "objection", tag: "Confiança na loja",
-    title: "Cliente desconfia da loja",
-    preview: "\"Essa loja entrega mesmo? É confiável?\"",
-    script: `[Nome], eu entendo que você está inseguro — e faz todo sentido ter essa preocupação.
-
-Por isso, se quiser, a gente pode fazer uma videochamada rápida. Posso te mostrar o estoque, a loja, tudo certinho, pra você ficar 100% seguro de que está comprando em um lugar que oferece qualidade, procedência e que entrega certinho.
-
-O que você acha? 😊`
-  },
-  {
-    id: 2, type: "objection", tag: "Garantia (geral)",
-    title: "Cliente pergunta sobre garantia",
-    preview: "\"Tem garantia? Quanto tempo dura?\"",
-    script: `[Nome], pode ficar totalmente tranquilo quanto à garantia das nossas peças.
-
-A gente só trabalha com produtos de alta qualidade, feitos pra ter durabilidade real. É comum as peças durarem bem mais de um ano sem nenhum problema.
-
-Inclusive, muitos clientes nossos comentam que as peças continuam em ótimo estado mesmo depois desse tempo.
-
-Pode confiar — você vai estar investindo em algo que realmente vale a pena.`
-  },
-  {
-    id: 3, type: "objection", tag: "Garantia (com prazo)",
-    title: "Cliente quer prazo exato de garantia",
-    preview: "\"Mas qual é o prazo oficial de garantia?\"",
-    script: `[Nome], pode ficar tranquilo.
-
-Aqui trabalhamos apenas com produtos de procedência, com alta durabilidade e garantia com certificado.
-
-Nossas peças têm 6 meses de garantia direto do fabricante — mas a verdade é que elas costumam durar bem mais que isso. Muitos clientes relatam uso acima de 1 ano sem nenhum problema.
-
-Ou seja, você está levando uma peça de qualidade, feita pra durar.`
-  },
-  {
-    id: 4, type: "objection", tag: "Concorrência / preço",
-    title: "\"Vi em outra loja mais barato\"",
-    preview: "Cliente compara com concorrente mais barato",
-    script: `Entendo [nome], e é bom você comparar mesmo.
-
-O que posso te dizer é que aqui trabalhamos com peças de alta qualidade, com padrão diferenciado da concorrência. Não é à toa que muitos clientes que compravam em outros lugares comentam que a qualidade não se compara com a nossa.
-
-A diferença está no padrão de fabricação — a qualidade e a durabilidade são bem superiores. Vale a comparação antes de decidir.`
-  },
-  {
-    id: 5, type: "objection", tag: "Preço caro",
-    title: "\"Tá caro\" / \"Não vale isso\"",
-    preview: "Cliente diz que o preço está alto demais",
-    script: `[Nome], a gente até conseguiria oferecer um preço menor — mas pra isso teríamos que trabalhar com produtos de qualidade inferior, entende?
-
-Como aqui a gente preza pela durabilidade e qualidade, não conseguimos baixar mais que isso. Nosso padrão é diferenciado em relação à concorrência.
-
-Tenho certeza que você não vai se arrepender e vai voltar a comprar. 😊`
-  },
-  {
-    id: 6, type: "objection", tag: "Estilo / indecisão",
-    title: "Cliente inseguro se vai combinar com ele",
-    preview: "\"Não sei se combina comigo, não uso acessório\"",
-    script: `[Nome], essa peça é realmente diferenciada. Ao vivo ela tem um brilho e um caimento que não aparece totalmente na foto — tenho certeza que não vai se arrepender.
-
-Se quiser, posso te mandar uma foto dela sendo usada pra você visualizar melhor antes de decidir. 😊`
-  },
-  {
-    id: 7, type: "objection", tag: "Cor diferente",
-    title: "Cliente recebe e a cor parece diferente",
-    preview: "\"A cor chegou diferente do que eu esperava\"",
-    script: `[Nome], a diferença na cor acontece porque o pingente puxa mais pro ouro 18k e a corrente pro ouro 24k — ou o inverso.
-
-Ambas têm tonalidade de ouro, só que em intensidades ligeiramente diferentes. Se pesquisar, você vai ver que o ouro 24k é mesmo diferente do 18k visualmente.
-
-Isso não muda o fato de a peça continuar bonita e com qualidade. Qualquer dúvida, pode me chamar que a gente resolve!`
-  },
-  {
-    id: 8, type: "objection", tag: "Tamanho / ajuste",
-    title: "Cliente quer tamanho diferente",
-    preview: "\"Mas eu curto menor / maior\"",
-    script: `[Nome], esse modelo fica excelente pra homem, com ótimo caimento — tenho certeza que vai gostar.
-
-Mas se preferir um tamanho diferente, sem problema: em toda cidade tem pessoas que fazem esse ajuste, cobram em torno de R$ 5 a R$ 10. É rápido e simples. 😊`
-  },
-  {
-    id: 9, type: "objection", tag: "Pode molhar?",
-    title: "Cliente pergunta se pode molhar",
-    preview: "\"Posso tomar banho usando? Pode molhar?\"",
-    script: `[Nome], a semijoia tem mais durabilidade quando evita contato com água, suor e produtos químicos (perfume, sabonete, cloro).
-
-Pra garantir que dure bastante, o ideal é tirar antes do banho e guardar num local seco.
-
-Com esse cuidado simples, a peça dura muito mais e continua linda por muito tempo. 😊`
-  },
-
-  // ── FOLLOW-UP — 1. LEADS NOVOS (CURTO) ───────────────────────────────────
-  {
-    id: 10, type: "followup", tag: "Leads novos · D0",
-    title: "Follow-up leads novos — D0 (2 a 4h depois)",
-    preview: "Cliente sumiu no mesmo dia. Mandar 2 a 4h após parar de responder.",
-    when: "⏱ Quando usar: 2 a 4 horas depois que o cliente parou de responder no primeiro contato.",
-    script: `Oi [nome], conseguiu ouvir meu áudio? 😄
-
-Posso te mandar foto dos modelos mais pedidos aqui pra você dar uma olhada!`,
-    why: "Tom leve, sem cobrar. Só reabre a conversa com uma pergunta simples.",
-    rules: `REGRA GERAL — Leads novos (curto):
-• Cadência de 5 tentativas em 6 dias
-• Se o cliente responder em qualquer etapa, para o funil e atende normalmente
-• Sempre adaptar [nome] e o produto da conversa
-• Após D6 sem resposta → mover pra etiqueta PERDIDO`
-  },
-  {
-    id: 11, type: "followup", tag: "Leads novos · D1",
-    title: "Follow-up leads novos — D1 (1 dia depois)",
-    preview: "Gatilho: desconto especial no Pix para primeira compra.",
-    when: "⏱ Quando usar: 1 dia após o primeiro contato sem resposta.",
-    script: `Oi [nome], esqueci de te falar! 😅
-
-Na primeira compra no Pix ainda consigo um descontinho especial pra você. Escolhe o modelo e te passo o valor! 😊`,
-    why: "O desconto no Pix é um gatilho real e concreto — não é pressão, é uma vantagem que ele ainda pode aproveitar.",
-    rules: `REGRA GERAL — Leads novos (curto):
-• Cadência de 5 tentativas em 6 dias
-• Se o cliente responder em qualquer etapa, para o funil e atende normalmente
-• Sempre adaptar [nome] e o produto da conversa
-• Após D6 sem resposta → mover pra etiqueta PERDIDO`
-  },
-  {
-    id: 12, type: "followup", tag: "Leads novos · D3",
-    title: "Follow-up leads novos — D3 (3 dias depois)",
-    preview: "Gatilho: humor + foto do produto de interesse.",
-    when: "⏱ Quando usar: 3 dias após o primeiro contato sem resposta. Mandar junto com foto ou vídeo da peça.",
-    script: `[foto do produto]
-
-Saudades do que a gente não viveu ainda, [nome] 😂
-
-Tá te esperando aqui!`,
-    why: "Tom descontraído e engraçado. Não cobra, não pressiona — só lembra com leveza. A foto reativa o desejo visual.",
-    rules: `REGRA GERAL — Leads novos (curto):
-• Cadência de 5 tentativas em 6 dias
-• Se o cliente responder em qualquer etapa, para o funil e atende normalmente
-• Sempre adaptar [nome] e o produto da conversa
-• Após D6 sem resposta → mover pra etiqueta PERDIDO`
-  },
-  {
-    id: 13, type: "followup", tag: "Leads novos · D4",
-    title: "Follow-up leads novos — D4 (oferta relâmpago)",
-    preview: "Oferta com prazo — válida só hoje. Preencher os valores reais.",
-    when: "⏱ Quando usar: 4 dias após o primeiro contato sem resposta. Mandar junto com foto do produto.",
-    script: `[foto do produto]
-
-Esqueceu de mim né? kkk Mas eu não esqueci de você! 😄
-
-Tô com uma condição especial nesse modelo hoje: de R$[X] por R$[Y]. Só hoje! Posso separar a sua? 🔥`,
-    why: "Urgência real com prazo de 1 dia. O humor no começo quebra o gelo antes de apresentar a oferta.",
-    rules: `ATENÇÃO: preencher R$[X] e R$[Y] com os valores reais do produto antes de enviar.
-
-REGRA GERAL — Leads novos (curto):
-• Cadência de 5 tentativas em 6 dias
-• Se o cliente responder em qualquer etapa, para o funil e atende normalmente
-• Após D6 sem resposta → mover pra etiqueta PERDIDO`
-  },
-  {
-    id: 14, type: "followup", tag: "Leads novos · D6",
-    title: "Follow-up leads novos — D6 (encerramento)",
-    preview: "Última tentativa. Fechar com elegância e porta aberta.",
-    when: "⏱ Quando usar: 6 dias após o primeiro contato sem resposta. Última mensagem do funil.",
-    script: `Oii [nome], pelos contatos sem resposta entendo que você não tem mais interesse na oferta especial, então estou finalizando meu contato por aqui ☹️`,
-    why: "Encerramento com porta aberta. Não implora, não pressiona. Se ele quiser voltar, sabe que pode.",
-    rules: `Após enviar essa mensagem sem resposta → arquivar o lead com etiqueta PERDIDO.`
-  },
-
-  // ── FOLLOW-UP — 2. RECUPERAÇÃO DE PAGAMENTO PENDENTE ─────────────────────
-  {
-    id: 20, type: "followup", tag: "Pgto pendente · Passo 1",
-    title: "Pgto pendente — Passo 1 (foto na caixinha)",
-    preview: "Cliente confirmou pedido mas sumiu sem pagar. Mandar após 15 min.",
-    when: "⏱ Quando usar: 15 minutos após mandar o formulário, independente de ter preenchido. Tirar foto ou vídeo do produto já na caixinha e mandar junto.",
-    script: `[nome], já separei aqui o seu! 📦
-
-Quando fizer o pagamento, me manda o comprovante que eu já embalo e despacho o quanto antes! 😄`,
-    why: "A foto do produto na caixinha é o gatilho principal — prova que o pedido é real e já está separado. Gera urgência sem precisar falar nada.",
-    rules: `REGRA GERAL — Recuperação de pagamento pendente:
-• Se o cliente responder em qualquer etapa, para o funil e atende normalmente
-• Fluxo: Foto na caixinha → aguarda → retornou com desculpa → videochamada → sumiu → mensagem manhã seguinte → sem resposta → encerramento com escassez → arquiva`
-  },
-  {
-    id: 21, type: "followup", tag: "Pgto pendente · Passo 2A",
-    title: "Pgto pendente — Passo 2A (retornou com desculpa)",
-    preview: "Cliente respondeu mas deu desculpa ou ficou inseguro.",
-    when: "⏱ Quando usar: se o cliente responder com desculpa ou demonstrar insegurança após o Passo 1.",
-    script: `[nome], vamos fazer uma chamada de vídeo rápida agora? ☺️
-
-Já pra você ver a qualidade do produto e adquirir tranquilo sabendo que vai chegar certinho na sua casa. 🙏`,
-    why: "Mandou a mensagem → espera 2 minutos → faz a chamada. Ele atendendo ou não, a iniciativa já quebra a objeção.",
-    rules: `Após mandar: espera 2 minutos e faz a chamada de vídeo.
-Se ele atender ou não → a iniciativa já quebra a objeção.`
-  },
-  {
-    id: 22, type: "followup", tag: "Pgto pendente · Passo 2B",
-    title: "Pgto pendente — Passo 2B (sumiu sem resposta)",
-    preview: "Cliente não respondeu nada. Mandar no dia seguinte de manhã.",
-    when: "⏱ Quando usar: se o cliente sumiu sem responder após o Passo 1. Mandar no dia seguinte pela manhã.",
-    script: `Bom dia, [nome]! ☺️
-
-Seu pedido ainda tá separado aqui. Consegue confirmar o pagamento hoje? Assim já despacho ainda hoje pelos Correios! 📦🚀`,
-    why: "\"Despacho ainda hoje\" cria urgência real — ele sabe que a compra resolve rápido se agir agora.",
-    rules: `Mandar pela manhã do dia seguinte ao Passo 1.`
-  },
-  {
-    id: 23, type: "followup", tag: "Pgto pendente · Passo 3",
-    title: "Pgto pendente — Passo 3 (encerramento com escassez)",
-    preview: "Sem resposta após o dia seguinte. Última tentativa com escassez.",
-    when: "⏱ Quando usar: sem resposta após o Passo 2B. Última mensagem do funil de pagamento pendente.",
-    script: `Opa [nome], tudo bem? 😊
-
-Vou ter que liberar o estoque aqui — devido à promoção, tô com apenas 3 últimas unidades desse modelo que você tinha escolhido.
-
-Não consigo segurar por muito mais tempo. Mas se ainda tiver interesse, é só me chamar que vejo o que consigo fazer por você. 🙏`,
-    why: "\"3 últimas unidades\" é escassez específica — número concreto converte mais que \"poucas unidades\".",
-    rules: `Após essa mensagem sem resposta → arquivar o lead.`
-  },
-
-  // ── FOLLOW-UP — 3. RECUPERAÇÃO DE LEADS FRIOS ────────────────────────────
-  {
-    id: 30, type: "followup", tag: "Lead frio · Msg 1",
-    title: "Lead frio — Mensagem 1 (novidade)",
-    preview: "15+ dias de silêncio total. Reabre sem pressão com produto novo.",
-    when: "⏱ Quando usar: após 15 dias de silêncio total do lead, sem nenhuma resposta. Mandar com foto ou vídeo de produto novo ou combinação diferente.",
-    script: `Ei [nome], sumido! 😏
-
-Lembrei de você aqui! Porque chegou uma peça/combinação nova que combina muito com o seu estilo.
-
-[foto/vídeo]
-
-Quis te mostrar antes de todo mundo. Quer ver mais? 😊`,
-    why: "\"Lembrei de você\" soa como atenção genuína, não tentativa de venda. Tom leve, sem cobrar resposta.",
-    rules: `REGRA GERAL — Leads frios:
-• Só ativar após 15 dias de silêncio total
-• NÃO oferecer desconto — o follow-up anterior já usou esse gatilho
-• Usar o contexto da conversa anterior sempre que possível
-• Se responder em qualquer etapa, atende normalmente
-• Após Mensagem 3 sem resposta → arquiva o lead`
-  },
-  {
-    id: 31, type: "followup", tag: "Lead frio · Msg 2",
-    title: "Lead frio — Mensagem 2 (prova social)",
-    preview: "2 dias sem resposta após Msg 1. Manda print de elogio ou foto de cliente.",
-    when: "⏱ Quando usar: 2 dias após a Mensagem 1 sem resposta. Mandar com print de elogio ou foto/vídeo de cliente usando o produto.",
-    script: `Ô [nome], olha o que chegou aqui hoje 😄👇
-
-[print/vídeo do elogio ou foto do cliente usando]
-
-Essa que ela adquiriu é do mesmo modelo que a gente tinha conversado antes. Quem adquire nossa qualidade não se arrepende. 😉🥇
-
-Te mando foto dos modelos disponíveis se quiser dar uma olhadinha melhor 😊`,
-    why: "\"A gente tinha conversado\" usa o contexto da conversa anterior — muito mais forte que mensagem genérica.",
-    rules: `REGRA GERAL — Leads frios:
-• Só ativar após 15 dias de silêncio total
-• NÃO oferecer desconto
-• Se responder → atende normalmente
-• Após Mensagem 3 sem resposta → arquiva o lead`
-  },
-  {
-    id: 32, type: "followup", tag: "Lead frio · Msg 3",
-    title: "Lead frio — Mensagem 3 (encerramento leve)",
-    preview: "3 dias sem resposta após Msg 2. Última tentativa, sem desconto.",
-    when: "⏱ Quando usar: 3 dias após a Mensagem 2 sem resposta. Última mensagem do funil de leads frios.",
-    script: `Oi [nome]! Prometo que essa é a última vez que vou te chamar por aqui 😄
-
-Sei que a vida é corrida e talvez o momento não seja esse mesmo.
-
-Mas fica à vontade pra me chamar quando quiser que eu te atendo na hora. 😉`,
-    why: "Tirar a pressão muitas vezes faz o cliente responder. Deixa a porta aberta sem implorar pela venda.",
-    rules: `Após essa mensagem sem resposta → arquivar o lead.`
-  },
-
-  // ── FOLLOW-UP — 4. PÓS-VENDA, RECOMPRA E INDICAÇÃO ──────────────────────
-  {
-    id: 40, type: "followup", tag: "Pós-venda · Envio",
-    title: "Pós-venda 1 — Confirmação de envio",
-    preview: "Enviar assim que despachar, junto com foto do produto na caixa.",
-    when: "⏱ Quando usar: assim que o pedido for despachado. Mandar junto com foto do produto na caixinha.",
-    script: `[nome], boa notícia! 🚀
-
-Seu pedido acabou de ser despachado!
-
-Código de rastreio: [CODIGO]
-Prazo estimado: [X] dias úteis
-
-Qualquer coisa tô aqui. Vai ficar incrível em você! 🔥`,
-    why: "Confirma a entrega, passa o rastreio e já aquece o cliente pra recompra futura.",
-    rules: `Preencher [CODIGO] e [X] com os dados reais antes de enviar.`
-  },
-  {
-    id: 41, type: "followup", tag: "Pós-venda · Entrega",
-    title: "Pós-venda 2 — Confirmação de entrega",
-    preview: "2 dias após o prazo estimado. Pedir foto do cliente usando.",
-    when: "⏱ Quando usar: 2 dias após o prazo estimado de entrega.",
-    script: `Oi [nome], chegou tudo certinho aí? 😄
-
-Se puder me manda uma foto — pode ser mostrando que recebeu o produto ou usando ele mesmo. A gente costuma postar mostrando que chegou certinho pros clientes! 📸🔥`,
-    why: "Pede foto de forma natural. Gera conteúdo pra perfil e cria vínculo com o cliente.",
-    rules: `Se ele mandar a foto → aproveitar pra stories/destaques (com permissão).`
-  },
-  {
-    id: 42, type: "followup", tag: "Pós-venda · Aquecimento",
-    title: "Pós-venda 3 — Atenção e aquecimento",
-    preview: "10 dias após a entrega. Reabre com novidade e tom descontraído.",
-    when: "⏱ Quando usar: 10 dias após a entrega.",
-    script: `Ei [nome], tudo bem? 😊
-
-Fico pensando nos clientes depois que o pedido sai daqui kkk — já tá usando?
-
-Chegou coisa nova aqui que combina demais com o que você levou. Posso te mostrar? 🔥`,
-    why: "Tom humano e descontraído. Não é venda direta — é relacionamento que leva à recompra.",
-    rules: `Janela de ouro: entre a entrega e 3 meses. Aproveitar enquanto o cliente está satisfeito.`
-  },
-  {
-    id: 43, type: "followup", tag: "Pós-venda · Recompra",
-    title: "Pós-venda 4 — Oferta de recompra + indicação",
-    preview: "20 dias após a entrega. Produto novo + programa de indicação.",
-    when: "⏱ Quando usar: 20 dias após a entrega. Mandar com foto ou vídeo de produto novo.",
-    script: `Oi [nome]! 😄
-
-Lembrei de você porque chegou uma peça nova aqui que combina demais com o que você levou.
-
-[foto/vídeo]
-
-E se tiver algum amigo que curte esse estilo — manda meu contato! Se ele comprar acima de R$174,90, você já garante 10% de desconto na próxima compra. 🤝🔥`,
-    why: "Junta recompra + indicação em uma mensagem só. O desconto por indicação é um incentivo concreto e fácil de entender.",
-    rules: `Programa de indicação:
-• Indicado precisa comprar acima de R$174,90
-• 10% de desconto por indicação, acumulativo até 30% (máx. 3 indicações)
-• Desconto não acumula com outras promoções
-• Avisar o cliente assim que a indicação fechar`
-  },
-  {
-    id: 44, type: "followup", tag: "Pós-venda · Oferta VIP",
-    title: "Recompra 2 — Oferta exclusiva para cliente",
-    preview: "Sem reação ao PV4. Manda após mais 15 dias com condição especial.",
-    when: "⏱ Quando usar: se o cliente não reagiu ao Pós-venda 4. Mandar 15 dias depois com foto/vídeo.",
-    script: `Oi [nome]! 😊
-
-Tenho uma condição especial aqui só pro pessoal que já é cliente.
-
-[foto/vídeo]
-
-Esse modelo tá saindo por R$[VALOR]. Quer que eu reserve um pra você? 🙏`,
-    why: "\"Só pro pessoal que já é cliente\" cria exclusividade real para quem já comprou.",
-    rules: `Preencher R$[VALOR] com o preço real antes de enviar.`
-  },
-  {
-    id: 45, type: "followup", tag: "Pós-venda · Brinde",
-    title: "Recompra 3 — Gatilho do brinde",
-    preview: "Cliente demonstrou interesse mas hesitou no valor.",
-    when: "⏱ Quando usar: cliente demonstrou interesse na recompra mas travou no preço.",
-    script: `Ah [nome], esqueci de te falar! 😄
-
-Se o seu pedido fechar acima de R$[VALOR], eu mando uma correntinha de brinde junto pra você. Totalmente grátis!
-
-Quer ver o que dá pra montar? 😊`,
-    why: "O brinde muda o foco do preço para o ganho. Cliente compara \"pago X e ganho Y\" em vez de só focar no custo.",
-    rules: `Preencher R$[VALOR] com o valor mínimo do pedido para o brinde ser aplicado.`
-  },
-  {
-    id: 46, type: "followup", tag: "Pós-venda · Indicação ok",
-    title: "Indicação confirmada — avisar quem indicou",
-    preview: "Enviar assim que o indicado finalizar o pedido.",
-    when: "⏱ Quando usar: assim que o cliente indicado fechar o pedido. Avisar imediatamente quem fez a indicação.",
-    script: `Oiii [nome]!
-
-Seu amigo [nome do indicado] acabou de garantir o pedido dele aqui!
-
-Seu 10% de desconto já tá garantido — é só me chamar quando quiser usar, no que você quiser. 😄🙏`,
-    why: "Avisar na hora reforça a credibilidade do programa e incentiva novas indicações.",
-    rules: `Substituir [nome do indicado] pelo nome real.
-Desconto não acumula com outras promoções.`
-  },
-
-  // ── FOLLOW-UP — 5. UPSELL ─────────────────────────────────────────────────
-  {
-    id: 50, type: "followup", tag: "Upsell · Abordagem",
-    title: "Upsell — Oferecer peça complementar",
-    preview: "Cliente confirmou a compra. Oferecer peça combinando com desconto especial.",
-    when: "⏱ Quando usar: SOMENTE após o cliente confirmar a compra com frases como \"Vou querer, manda o Pix\", \"Pode separar\" ou \"Vou mandar o endereço\". NUNCA antes.",
-    script: `Eita [nome], esqueci de te dizer — a gente tem a pulseirinha desse mesmo modelo da corrente! 😄
-
-[foto da pulseira]
-
-Ela tá saindo na promoção de [preço cheio] ❌ por apenas [preço promocional] ✅
-
-Mas como você já vai garantir a corrente agora, consigo fazer uma condição especial pra você levar o kit completo.
-
-Adquirindo a pulseira hoje, deixo ela pra você por apenas [preço upsell] 🔥
-
-Essa condição é só porque você já está garantindo a corrente agora — se for em outro momento, volta ao preço normal.
-
-Posso adicionar ela no seu pedido? 😊`,
-    why: "O cliente compara mentalmente o preço cheio com o preço upsell — quase metade do valor. Isso torna a decisão fácil.",
-    rules: `Como preencher os preços:
-• [preço cheio] → preço original da pulseira. Ex: R$189,90
-• [preço promocional] → oferta do momento. Ex: R$124,90
-• [preço upsell] → desconto extra de R$30–35. Ex: R$95,00
-
-Regras:
-1. Só mandar DEPOIS da confirmação de compra. Nunca antes.
-2. Mandar a foto da pulseira junto. Sem foto não há desejo.
-3. Se hesitar: "Sem problema! Mas lembra que esse valor especial é só hoje por você já estar garantindo a corrente 😊"
-4. Adaptar pra outros combos: corrente + pingente, pulseira + anel, peça + perfume árabe.`
-  },
-
-  // ── FECHAMENTO ────────────────────────────────────────────────────────────
-  {
-    id: 15, type: "fechamento", tag: "Urgência / escassez",
-    title: "Gerar urgência pra fechar",
-    preview: "Cliente está quase decidindo mas enrolando",
-    script: `[Nome], tenho ela disponível aqui — mas está com poucas unidades.
-
-Tenta me confirmar o quanto antes que eu já deixo separada pra você, tá bom? 😊`
-  },
-  {
-    id: 16, type: "fechamento", tag: "Qualidade ao vivo",
-    title: "Qualidade que não aparece na foto",
-    preview: "Cliente hesita por não saber como é ao vivo",
-    script: `[Nome], essa peça tá linda mesmo — pessoalmente ela fica ainda mais bonita do que na foto.
-
-Tenho certeza que vai gostar muito. 😊`
-  },
-  {
-    id: 17, type: "fechamento", tag: "Reforço de escolha",
-    title: "Confirmar que o cliente fez boa escolha",
-    preview: "Quando o cliente acabou de escolher uma peça",
-    script: `Ótima escolha! Essa peça é bem diferenciada — é uma das que mais saem aqui, não é à toa.
-
-Tenho certeza que você vai se destacar com ela. 😊`
-  },
-  {
-    id: 18, type: "fechamento", tag: "Exclusividade",
-    title: "Criar senso de exclusividade",
-    preview: "Para peças de linha mais selecionada",
-    script: `Essa é de uma linha mais selecionada — não tenho muitas unidades disponíveis.
-
-Caso tenha interesse, me confirma rápido pra eu garantir a sua. 😊`
-  },
-  {
-    id: 19, type: "fechamento", tag: "Consultiva",
-    title: "Entender preferência do cliente",
-    preview: "Quando o cliente não sabe o que quer",
-    script: `Você tem preferência em correntes mais robustas, mais finas/discretas ou algo no meio?
-
-Assim consigo te indicar a que mais vai combinar com seu estilo. 😊`
-  },
-
-  // ── DORES ─────────────────────────────────────────────────────────────────
-  {
-    id: 60, type: "dor", tag: "Medo de bijuteria barata",
-    title: "Medo de parecer bijuteria / coisa de qualidade baixa",
-    preview: "\"Na foto é bonito, mas ao vivo deve ser fraco\"",
-    script: `O cliente quer usar acessório pra parecer mais alinhado e com mais presença. O maior medo é colocar no corpo e ficar com cara de coisa barata.
-
-Como quebrar esse medo:
-→ Manda vídeo mostrando a peça ao vivo, com iluminação natural
-→ Fala do peso e acabamento da peça
-→ Mostra foto de cliente real usando
-→ Reforça: "pessoalmente ela fica ainda melhor que na foto"
-→ Oferece videochamada se ele insistir em duvidar`
-  },
-  {
-    id: 61, type: "dor", tag: "Medo de desbotar",
-    title: "Medo de a peça desbotar ou descascar",
-    preview: "\"Quanto tempo dura? Vai perder a cor?\"",
-    script: `Esse é o medo racional mais forte. Ele já comprou peça ruim antes e entra desconfiado.
-
-Como quebrar esse medo:
-→ Fala da procedência e do processo de banho
-→ Dá um prazo real ("a maioria dos nossos clientes usa mais de 1 ano sem problema")
-→ Orienta sobre cuidados simples: evitar água, suor, produtos químicos
-→ Se tiver garantia, reforça isso com segurança`
-  },
-  {
-    id: 62, type: "dor", tag: "Medo de não combinar",
-    title: "Medo de não combinar com o estilo dele",
-    preview: "\"Não sou acostumado a usar acessório\"",
-    script: `Ele não quer "usar acessório" — ele quer "ter mais presença". Não quer parecer artificial.
-
-Como quebrar esse medo:
-→ Pergunta o estilo dele antes de indicar a peça
-→ Mostra peças em uso no corpo (não só fundo branco)
-→ Orienta combinações: "essa corrente fina vai bem com qualquer roupa, discreta mas com presença"
-→ Diz que é uma das que mais saem pra homens com o perfil dele`
-  },
-  {
-    id: 63, type: "dor", tag: "Medo de golpe",
-    title: "Medo de tomar golpe / loja não confiável",
-    preview: "Objeção silenciosa — ele não fala mas pensa",
-    script: `Essa objeção raramente é falada, mas trava muito — principalmente no Instagram.
-
-Como quebrar esse medo:
-→ Tem prints de clientes satisfeitos no perfil (stories, destaques)
-→ Oferece videochamada pra mostrar o estoque ao vivo
-→ Mostra avaliações e depoimentos reais
-→ Reforça: "pode checar nosso perfil, temos muitos clientes atendidos"`
-  },
-  {
-    id: 64, type: "dor", tag: "Medo de pagar e não valer",
-    title: "Medo de pagar e não valer o preço",
-    preview: "\"É bonito, mas vale isso mesmo?\"",
-    script: `Como semijoia não é necessidade, ela precisa parecer justificável pro cliente.
-
-O que trava: ele não enxerga valor suficiente. Preço não assusta — o que assusta é não enxergar valor.
-
-Como quebrar:
-→ Mostra o que ele está comprando de verdade: presença, imagem, destaque
-→ Compara com o que ele gastaria em outros produtos de valor similar
-→ Reforça durabilidade e qualidade
-→ Mostra depoimentos de quem comprou e ficou satisfeito`
-  }
+  // OBJEÇÕES
+  {id:1,type:"objection",tag:"Confiança na loja",title:"Cliente desconfia da loja",preview:"\"Essa loja entrega mesmo? É confiável?\"",script:`[Nome], eu entendo que você está inseguro — e faz todo sentido ter essa preocupação.\n\nPor isso, se quiser, a gente pode fazer uma videochamada rápida. Posso te mostrar o estoque, a loja, tudo certinho, pra você ficar 100% seguro de que está comprando em um lugar que oferece qualidade, procedência e que entrega certinho.\n\nO que você acha? 😊`},
+  {id:2,type:"objection",tag:"Garantia (geral)",title:"Cliente pergunta sobre garantia",preview:"\"Tem garantia? Quanto tempo dura?\"",script:`[Nome], pode ficar totalmente tranquilo quanto à garantia das nossas peças.\n\nA gente só trabalha com produtos de alta qualidade, feitos pra ter durabilidade real. É comum as peças durarem bem mais de um ano sem nenhum problema.\n\nInclusive, muitos clientes nossos comentam que as peças continuam em ótimo estado mesmo depois desse tempo.\n\nPode confiar — você vai estar investindo em algo que realmente vale a pena.`},
+  {id:3,type:"objection",tag:"Garantia (com prazo)",title:"Cliente quer prazo exato de garantia",preview:"\"Mas qual é o prazo oficial de garantia?\"",script:`[Nome], pode ficar tranquilo.\n\nAqui trabalhamos apenas com produtos de procedência, com alta durabilidade e garantia com certificado.\n\nNossas peças têm 6 meses de garantia direto do fabricante — mas a verdade é que elas costumam durar bem mais que isso. Muitos clientes relatam uso acima de 1 ano sem nenhum problema.\n\nOu seja, você está levando uma peça de qualidade, feita pra durar.`},
+  {id:4,type:"objection",tag:"Concorrência / preço",title:"\"Vi em outra loja mais barato\"",preview:"Cliente compara com concorrente mais barato",script:`Entendo [nome], e é bom você comparar mesmo.\n\nO que posso te dizer é que aqui trabalhamos com peças de alta qualidade, com padrão diferenciado da concorrência. Não é à toa que muitos clientes que compravam em outros lugares comentam que a qualidade não se compara com a nossa.\n\nA diferença está no padrão de fabricação — a qualidade e a durabilidade são bem superiores. Vale a comparação antes de decidir.`},
+  {id:5,type:"objection",tag:"Preço caro",title:"\"Tá caro\" / \"Não vale isso\"",preview:"Cliente diz que o preço está alto demais",script:`[Nome], a gente até conseguiria oferecer um preço menor — mas pra isso teríamos que trabalhar com produtos de qualidade inferior, entende?\n\nComo aqui a gente preza pela durabilidade e qualidade, não conseguimos baixar mais que isso. Nosso padrão é diferenciado em relação à concorrência.\n\nTenho certeza que você não vai se arrepender e vai voltar a comprar. 😊`},
+  {id:6,type:"objection",tag:"Estilo / indecisão",title:"Cliente inseguro se vai combinar com ele",preview:"\"Não sei se combina comigo, não uso acessório\"",script:`[Nome], essa peça é realmente diferenciada. Ao vivo ela tem um brilho e um caimento que não aparece totalmente na foto — tenho certeza que não vai se arrepender.\n\nSe quiser, posso te mandar uma foto dela sendo usada pra você visualizar melhor antes de decidir. 😊`},
+  {id:7,type:"objection",tag:"Cor diferente",title:"Cliente recebe e a cor parece diferente",preview:"\"A cor chegou diferente do que eu esperava\"",script:`[Nome], a diferença na cor acontece porque o pingente puxa mais pro ouro 18k e a corrente pro ouro 24k — ou o inverso.\n\nAmbas têm tonalidade de ouro, só que em intensidades ligeiramente diferentes. Se pesquisar, você vai ver que o ouro 24k é mesmo diferente do 18k visualmente.\n\nIsso não muda o fato de a peça continuar bonita e com qualidade. Qualquer dúvida, pode me chamar que a gente resolve!`},
+  {id:8,type:"objection",tag:"Tamanho / ajuste",title:"Cliente quer tamanho diferente",preview:"\"Mas eu curto menor / maior\"",script:`[Nome], esse modelo fica excelente pra homem, com ótimo caimento — tenho certeza que vai gostar.\n\nMas se preferir um tamanho diferente, sem problema: em toda cidade tem pessoas que fazem esse ajuste, cobram em torno de R$ 5 a R$ 10. É rápido e simples. 😊`},
+  {id:9,type:"objection",tag:"Pode molhar?",title:"Cliente pergunta se pode molhar",preview:"\"Posso tomar banho usando? Pode molhar?\"",script:`[Nome], a semijoia tem mais durabilidade quando evita contato com água, suor e produtos químicos (perfume, sabonete, cloro).\n\nPra garantir que dure bastante, o ideal é tirar antes do banho e guardar num local seco.\n\nCom esse cuidado simples, a peça dura muito mais e continua linda por muito tempo. 😊`},
+
+  // FOLLOW-UP
+  {id:10,type:"followup",tag:"D0 — 2 a 4h",title:"Follow-up D0 — cliente sumiu no mesmo dia",preview:"Mandar 2 a 4 horas após o cliente parar de responder",when:"⏱ 2 a 4 horas depois que o cliente parou de responder.",script:`Oiii [nome], conseguiu ver o que eu te mandei ali em cima?\n\nSe quiser, posso te mandar fotos dos modelos que mais saem aqui na loja pra você dar uma olhadinha 🙂`,why:"Tom leve, sem cobrar. Só reabre a conversa."},
+  {id:11,type:"followup",tag:"D1 — 1 dia",title:"Follow-up D1 — 1 dia depois",preview:"Gatilho: desconto especial no Pix para primeira compra",when:"⏱ 1 dia após o primeiro contato sem resposta.",script:`Boa tarde, [nome]!\n\nEsqueci de te falar ontem — na sua primeira compra, se o pagamento for no Pix, ainda consigo te dar um desconto especial 😊\n\nBasta escolher o modelo do seu interesse que te passo quanto fica com o desconto.`,why:"O desconto no Pix é concreto e real — não é pressão, é uma vantagem que ele ainda pode aproveitar."},
+  {id:12,type:"followup",tag:"D3 — 3 dias",title:"Follow-up D3 — 3 dias depois",preview:"Gatilho: humor + foto do produto de interesse",when:"⏱ 3 dias após o primeiro contato. Enviar com foto ou vídeo da peça.",script:`[Manda uma foto da peça que ele demonstrou interesse e escreve:]\n\nSaudades do que a gente não viveu ainda... 😄\n\nAqui te esperando, [nome]!`,why:"Tom descontraído. Não cobra, não pressiona — a foto reativa o desejo visual."},
+  {id:13,type:"followup",tag:"D4 — 4 dias",title:"Follow-up D4 — 4 dias depois (oferta)",preview:"Oferta com urgência — válida só hoje",when:"⏱ 4 dias após o primeiro contato. Enviar com foto do produto.",script:`[Manda uma foto do produto e escreve:]\n\nMas cara, esqueceu de mim né? kkk — mas eu lembrei de você! 😊\n\nTo com uma condição especial no modelo que você tem interesse. Hoje ele tá saindo de R$[valor original] por apenas R$[valor com desconto], mas essa condição é válida só hoje 😉\n\nPosso separar a sua?`,rules:"Preencher R$[valor original] e R$[valor com desconto] com os valores reais antes de enviar."},
+  {id:14,type:"followup",tag:"D6 — encerramento",title:"Follow-up D6 — última tentativa",preview:"6 dias após o primeiro contato — encerrar com elegância",when:"⏱ 6 dias após o primeiro contato. Última mensagem do funil.",script:`Oi [nome], pelos contatos sem resposta, entendo que você não tem mais interesse na oferta especial.\n\nEntão estou finalizando meu contato por aqui 🙁\n\nSe mudar de ideia, é só me chamar. Obrigada!`,rules:"Após enviar sem resposta → arquivar com etiqueta PERDIDO."},
+
+  // FECHAMENTO
+  {id:15,type:"fechamento",tag:"Urgência / escassez",title:"Gerar urgência pra fechar",preview:"Cliente está quase decidindo mas enrolando",script:`[Nome], tenho ela disponível aqui — mas está com poucas unidades.\n\nTenta me confirmar o quanto antes que eu já deixo separada pra você, tá bom? 😊`},
+  {id:16,type:"fechamento",tag:"Qualidade ao vivo",title:"Qualidade que não aparece na foto",preview:"Cliente hesita por não saber como é ao vivo",script:`[Nome], essa peça tá linda mesmo — pessoalmente ela fica ainda mais bonita do que na foto.\n\nTenho certeza que vai gostar muito. 😊`},
+  {id:17,type:"fechamento",tag:"Reforço de escolha",title:"Confirmar que o cliente fez boa escolha",preview:"Quando o cliente acabou de escolher uma peça",script:`Ótima escolha! Essa peça é bem diferenciada — é uma das que mais saem aqui, não é à toa.\n\nTenho certeza que você vai se destacar com ela. 😊`},
+  {id:18,type:"fechamento",tag:"Exclusividade",title:"Criar senso de exclusividade",preview:"Para peças de linha mais selecionada",script:`Essa é de uma linha mais selecionada — não tenho muitas unidades disponíveis.\n\nCaso tenha interesse, me confirma rápido pra eu garantir a sua. 😊`},
+  {id:19,type:"fechamento",tag:"Consultiva",title:"Entender preferência do cliente",preview:"Quando o cliente não sabe o que quer",script:`Você tem preferência em correntes mais robustas, mais finas/discretas ou algo no meio?\n\nAssim consigo te indicar a que mais vai combinar com seu estilo. 😊`},
+
+  // DORES
+  {id:20,type:"dor",tag:"Medo de bijuteria barata",title:"Medo de parecer bijuteria / coisa de qualidade baixa",preview:"\"Na foto é bonito, mas ao vivo deve ser fraco\"",script:`O cliente quer usar acessório pra parecer mais alinhado e com mais presença. O maior medo é colocar no corpo e ficar com cara de coisa barata.\n\nComo quebrar esse medo:\n→ Manda vídeo mostrando a peça ao vivo, com iluminação natural\n→ Fala do peso e acabamento da peça\n→ Mostra foto de cliente real usando\n→ Reforça: "pessoalmente ela fica ainda melhor que na foto"\n→ Oferece videochamada se ele insistir em duvidar`},
+  {id:21,type:"dor",tag:"Medo de desbotar",title:"Medo de a peça desbotar ou descascar",preview:"\"Quanto tempo dura? Vai perder a cor?\"",script:`Esse é o medo racional mais forte. Ele já comprou peça ruim antes e entra desconfiado.\n\nComo quebrar esse medo:\n→ Fala da procedência e do processo de banho\n→ Dá um prazo real ("a maioria dos nossos clientes usa mais de 1 ano sem problema")\n→ Orienta sobre cuidados simples: evitar água, suor, produtos químicos\n→ Se tiver garantia, reforça isso com segurança`},
+  {id:22,type:"dor",tag:"Medo de não combinar",title:"Medo de não combinar com o estilo dele",preview:"\"Não sou acostumado a usar acessório\"",script:`Ele não quer "usar acessório" — ele quer "ter mais presença". Não quer parecer artificial.\n\nComo quebrar esse medo:\n→ Pergunta o estilo dele antes de indicar a peça\n→ Mostra peças em uso no corpo (não só fundo branco)\n→ Orienta combinações: "essa corrente fina vai bem com qualquer roupa, discreta mas com presença"\n→ Diz que é uma das que mais saem pra homens com o perfil dele`},
+  {id:23,type:"dor",tag:"Medo de golpe",title:"Medo de tomar golpe / loja não confiável",preview:"Objeção silenciosa — ele não fala mas pensa",script:`Essa objeção raramente é falada, mas trava muito — principalmente no Instagram.\n\nComo quebrar esse medo:\n→ Tem prints de clientes satisfeitos no perfil (stories, destaques)\n→ Oferece videochamada pra mostrar o estoque ao vivo\n→ Mostra avaliações e depoimentos reais\n→ Reforça: "pode checar nosso perfil, temos muitos clientes atendidos"`},
+  {id:24,type:"dor",tag:"Medo de pagar e não valer",title:"Medo de pagar e não valer o preço",preview:"\"É bonito, mas vale isso mesmo?\"",script:`Como semijoia não é necessidade, ela precisa parecer justificável pro cliente.\n\nO que trava: ele não enxerga valor suficiente. Preço não assusta — o que assusta é não enxergar valor.\n\nComo quebrar:\n→ Mostra o que ele está comprando de verdade: presença, imagem, destaque\n→ Compara com o que ele gastaria em outros produtos de valor similar\n→ Reforça durabilidade e qualidade\n→ Mostra depoimentos de quem comprou e ficou satisfeito`},
+
+  // UPSELL
+  {id:30,type:"upsell",tag:"Após confirmação",title:"Upsell — Abordagem principal",preview:"Oferecer peça complementar com desconto de kit",when:"⚠️ Só mandar depois que o cliente confirmar: \"Vou querer\", \"Pode separar\" ou \"Vou mandar o endereço\". NUNCA antes.",script:`Eita [nome], esqueci de te dizer — a gente tem a pulseirinha desse mesmo modelo da corrente! 😄\n\n[foto da pulseira]\n\nEla tá saindo na promoção de [preço cheio] ❌ por apenas [preço promocional] ✅\n\nMas como você já vai garantir a corrente agora, consigo fazer uma condição especial pra você levar o kit completo.\n\nAdquirindo a pulseira hoje, deixo ela pra você por apenas [preço upsell] 🔥\n\nEssa condição é só porque você já está garantindo a corrente agora — se for em outro momento, volta ao preço normal.\n\nPosso adicionar ela no seu pedido? 😊`,why:"O cliente compara o preço cheio com o upsell — quase metade do valor. Isso torna a decisão fácil.",rules:"Como preencher:\n• [preço cheio] → preço original. Ex: R$189,90\n• [preço promocional] → oferta do momento. Ex: R$124,90\n• [preço upsell] → desconto extra de R$30–35. Ex: R$95,00\n\nSempre mandar a foto junto — sem foto não há desejo.\nAdaptar pra outros combos: corrente + pingente, pulseira + anel, peça + perfume árabe."},
+  {id:31,type:"upsell",tag:"Se hesitar",title:"Upsell — Cliente hesitou",preview:"Resposta quando o cliente não aceita de imediato",when:"Usar se o cliente não aceitar o upsell de imediato.",script:`Sem problema! Mas lembra que esse valor especial é só hoje por você já estar garantindo a corrente 😊`,why:"Reforça a urgência sem pressionar. Depois disso, fecha o pedido principal normalmente.",rules:"Após essa mensagem não insistir mais no upsell. Fechar o pedido principal."},
+
+  // PAGAMENTO PENDENTE
+  {id:40,type:"pgto",tag:"Passo 1 — 15 min",title:"Pgto pendente — Passo 1 (foto na caixinha)",preview:"15 min após o formulário — foto do produto na caixa",when:"⏱ 15 minutos após enviar o formulário. Tirar foto ou vídeo do produto na caixinha e mandar junto.",script:`[nome], já separei aqui o seu! 📦\n\nQuando fizer o pagamento, me manda o comprovante que eu já embalo e despacho o quanto antes! 😄`,why:"A foto do produto na caixinha prova que o pedido é real e já está separado. Gera urgência sem precisar falar nada."},
+  {id:41,type:"pgto",tag:"Passo 2A — Desculpa",title:"Pgto pendente — Passo 2A (retornou com desculpa)",preview:"Cliente respondeu com desculpa ou insegurança",when:"Usar se o cliente responder com desculpa ou insegurança após o Passo 1.",script:`[nome], vamos fazer uma chamada de vídeo rápida agora? ☺️\n\nJá pra você ver a qualidade do produto e adquirir tranquilo sabendo que vai chegar certinho na sua casa. 🙏`,why:"Mandou a mensagem → espera 2 minutos → faz a chamada. Ele atendendo ou não, a iniciativa já quebra a objeção.",rules:"Após mandar: esperar 2 minutos e ligar."},
+  {id:42,type:"pgto",tag:"Passo 2B — Dia seguinte",title:"Pgto pendente — Passo 2B (sumiu sem resposta)",preview:"Manhã do dia seguinte — urgência de envio",when:"⏱ Manhã do dia seguinte ao Passo 1, se o cliente sumiu sem responder.",script:`Bom dia, [nome]! ☺️\n\nSeu pedido ainda tá separado aqui. Consegues confirmar o pagamento hoje? Assim já despacho ainda hoje pelos Correios! 📦🚀`,why:"\"Despacho ainda hoje\" cria urgência real — ele sabe que a compra resolve rápido se agir agora."},
+  {id:43,type:"pgto",tag:"Passo 3 — Escassez",title:"Pgto pendente — Passo 3 (encerramento com escassez)",preview:"Última tentativa — 3 últimas unidades",when:"⏱ Usar após o Passo 2B sem resposta. Última mensagem do funil.",script:`Opa [nome], tudo bem? 😊\n\nVou ter que liberar o estoque aqui — devido à promoção, tô com apenas 3 últimas unidades desse modelo que você tinha escolhido.\n\nNão consigo segurar por muito mais tempo. Mas se ainda tiver interesse, é só me chamar que vejo o que consigo fazer por você. 🙏`,why:"\"3 últimas unidades\" é escassez específica — número concreto converte mais que \"poucas unidades\".",rules:"Após essa mensagem sem resposta → arquivar o lead."},
+
+  // LEADS FRIOS
+  {id:50,type:"frio",tag:"Msg 1 — Novidade",title:"Lead frio — Mensagem 1 (novidade)",preview:"Reabre o contato sem pressão com produto novo",when:"⏱ Ativar após 15 dias de silêncio total. Mandar com foto ou vídeo de produto novo.",script:`Ei [nome], sumido! 😏\n\nLembrei de você aqui! Porque chegou uma peça/combinação nova que combina muito com o seu estilo.\n\n[foto/vídeo]\n\nQuis te mostrar antes de todo mundo. Quer ver mais? 😊`,why:"\"Lembrei de você\" soa como atenção genuína, não tentativa de venda.",rules:"Não oferecer desconto — o follow-up anterior já usou esse gatilho."},
+  {id:51,type:"frio",tag:"Msg 2 — Prova social",title:"Lead frio — Mensagem 2 (prova social)",preview:"Print de elogio ou foto de cliente usando",when:"⏱ 2 dias após a Mensagem 1 sem resposta. Mandar com print de elogio ou foto de cliente.",script:`Ô [nome], olha o que chegou aqui hoje 😄👇\n\n[print/vídeo do elogio ou foto do cliente usando]\n\nEssa que ela adquiriu é do mesmo modelo que a gente tinha conversado antes. Quem adquire nossa qualidade não se arrepende. 😉🥇\n\nTe mando foto dos modelos disponíveis se quiser dar uma olhadinha melhor 😊`,why:"\"A gente tinha conversado\" usa o contexto anterior — muito mais forte que mensagem genérica."},
+  {id:52,type:"frio",tag:"Msg 3 — Encerramento",title:"Lead frio — Mensagem 3 (encerramento leve)",preview:"Última tentativa — porta aberta, sem pressão",when:"⏱ 3 dias após a Mensagem 2 sem resposta. Última mensagem do funil.",script:`Oi [nome]! Prometo que essa é a última vez que vou te chamar por aqui 😄\n\nSei que a vida é corrida e talvez o momento não seja esse mesmo.\n\nMas fica à vontade pra me chamar quando quiser que eu te atendo na hora. 😉`,why:"Tirar a pressão muitas vezes faz o cliente responder. Deixa a porta aberta sem implorar.",rules:"Após essa mensagem sem resposta → arquivar o lead."},
+
+  // PÓS-VENDA
+  {id:60,type:"posvenda",tag:"PV1 — Envio",title:"Pós-venda 1 — Confirmação de envio",preview:"Enviar assim que despachar, com rastreio",when:"⏱ Assim que o pedido for despachado. Mandar com foto do produto na caixinha.",script:`[nome], boa notícia! 🚀\n\nSeu pedido acabou de ser despachado!\n\nCódigo de rastreio: [CODIGO]\nPrazo estimado: [X] dias úteis\n\nQualquer coisa tô aqui. Vai ficar incrível em você! 🔥`,rules:"Preencher [CODIGO] e [X] com os dados reais antes de enviar."},
+  {id:61,type:"posvenda",tag:"PV2 — Entrega",title:"Pós-venda 2 — Confirmação de entrega",preview:"2 dias após o prazo estimado — pedir foto usando",when:"⏱ 2 dias após o prazo estimado de entrega.",script:`Oi [nome], chegou tudo certinho aí? 😄\n\nSe puder me manda uma foto — pode ser mostrando que recebeu o produto ou usando ele mesmo. A gente costuma postar mostrando que chegou certinho pros clientes! 📸🔥`,why:"Pede foto de forma natural. Gera conteúdo pro perfil e cria vínculo."},
+  {id:62,type:"posvenda",tag:"PV3 — Aquecimento",title:"Pós-venda 3 — Atenção e aquecimento",preview:"10 dias após entrega — novidade sem oferta direta",when:"⏱ 10 dias após a entrega.",script:`Ei [nome], tudo bem? 😊\n\nFico pensando nos clientes depois que o pedido sai daqui kkk — já tá usando?\n\nChegou coisa nova aqui que combina demais com o que você levou. Posso te mostrar? 🔥`,why:"Tom humano e descontraído. É relacionamento, não venda direta."},
+  {id:63,type:"posvenda",tag:"PV4 — Recompra",title:"Pós-venda 4 — Recompra + indicação",preview:"20 dias após entrega — produto novo + indicação",when:"⏱ 20 dias após a entrega. Mandar com foto ou vídeo de produto novo.",script:`Oi [nome]! 😄\n\nLembrei de você porque chegou uma peça nova aqui que combina demais com o que você levou.\n\n[foto/vídeo]\n\nE se tiver algum amigo que curte esse estilo — manda meu contato! Se ele comprar acima de R$174,90, você já garante 10% de desconto na próxima compra. 🤝🔥`,why:"Junta recompra + indicação numa mensagem só.",rules:"Programa de indicação:\n• Indicado precisa comprar acima de R$174,90\n• 10% por indicação, acumulativo até 30% (máx. 3)\n• Desconto não acumula com outras promoções\n• Avisar o cliente assim que a indicação fechar"},
+  {id:64,type:"posvenda",tag:"Recompra 2 — VIP",title:"Recompra 2 — Oferta exclusiva para cliente",preview:"15 dias após PV4 sem reação — condição especial",when:"⏱ 15 dias após o PV4 sem reação. Mandar com foto ou vídeo.",script:`Oi [nome]! 😊\n\nTenho uma condição especial aqui só pro pessoal que já é cliente.\n\n[foto/vídeo]\n\nEsse modelo tá saindo por R$[VALOR]. Quer que eu reserve um pra você? 🙏`,rules:"Preencher R$[VALOR] com o preço real antes de enviar."},
+  {id:65,type:"posvenda",tag:"Recompra 3 — Brinde",title:"Recompra 3 — Gatilho do brinde",preview:"Cliente interessado mas hesitou no valor",when:"Usar quando o cliente demonstrar interesse mas travar no preço.",script:`Ah [nome], esqueci de te falar! 😄\n\nSe o seu pedido fechar acima de R$[VALOR], eu mando uma correntinha de brinde junto pra você. Totalmente grátis!\n\nQuer ver o que dá pra montar? 😊`,why:"O brinde muda o foco do preço para o ganho.",rules:"Preencher R$[VALOR] com o valor mínimo do pedido para o brinde."},
+  {id:66,type:"posvenda",tag:"Indicação confirmada",title:"Indicação confirmada — avisar quem indicou",preview:"Enviar assim que o indicado fechar o pedido",when:"⏱ Assim que o indicado finalizar o pedido. Não deixar pra depois.",script:`Oiii [nome]!\n\nSeu amigo [nome do indicado] acabou de garantir o pedido dele aqui!\n\nSeu 10% de desconto já tá garantido — é só me chamar quando quiser usar, no que você quiser. 😄🙏`,why:"Avisar na hora reforça o programa e incentiva novas indicações.",rules:"Substituir [nome do indicado] pelo nome real.\nDesconto não acumula com outras promoções."}
 ];
 
-let currentTab = "todos";
-let currentItem = null;
+const regras = {
+  followup:{cls:"regra-amarela",title:"Regra principal",text:"Cadência de 5 tentativas em 6 dias. Se o cliente responder em qualquer etapa, para o funil e atende normalmente. Após D6 sem resposta → etiqueta PERDIDO."},
+  upsell:{cls:"regra-vermelha",title:"Regra de ouro",text:"Só oferecer o upsell DEPOIS que o cliente confirmar a compra. Nunca antes — para não travar o fechamento principal."},
+  pgto:{cls:"regra-amarela",title:"Regra principal",text:"Se o cliente responder em qualquer etapa, para o funil e atende normalmente. Fluxo: Passo 1 → 2A (desculpa) ou 2B (sumiu) → Passo 3 → arquiva."},
+  frio:{cls:"regra-azul",title:"Regras do funil",text:"Só ativar após 15 dias de silêncio total. NÃO oferecer desconto. Se responder → atende normalmente. Após Msg 3 sem resposta → arquiva."},
+  posvenda:{cls:"regra-verde",title:"Estratégia central",text:"A janela de ouro é entre a entrega e 3 meses. Empurrar a recompra enquanto o cliente está satisfeito. Não sugerir problema onde não existe."}
+};
 
-function setTab(tab, el) {
-  currentTab = tab;
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+let currentTab="todos", currentItem=null;
+
+function setTab(tab,el){
+  currentTab=tab;
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   el.classList.add("active");
   renderCards();
 }
 
-function getTagClass(type) {
-  return { objection: "tag-objection", followup: "tag-followup", dor: "tag-dor", fechamento: "tag-fechamento" }[type] || "tag-objection";
+function getTagClass(type){
+  return({objection:"tag-objection",followup:"tag-followup",dor:"tag-dor",fechamento:"tag-fechamento",upsell:"tag-upsell",pgto:"tag-pgto",frio:"tag-frio",posvenda:"tag-posvenda"}[type]||"tag-objection");
 }
 
-function getTagLabel(type) {
-  return { objection: "Objeção", followup: "Follow-up", dor: "Dor do cliente", fechamento: "Fechamento" }[type] || type;
+function getTagLabel(type){
+  return({objection:"Objeção",followup:"Follow-up",dor:"Dor do cliente",fechamento:"Fechamento",upsell:"Upsell",pgto:"Pgto pendente",frio:"Lead frio",posvenda:"Pós-venda"}[type]||type);
 }
 
-function renderCards() {
-  const q = document.getElementById("search").value.toLowerCase().trim();
-  let filtered = data;
-  if (currentTab !== "todos") filtered = filtered.filter(d => d.type === currentTab);
-  if (q) filtered = filtered.filter(d =>
-    d.title.toLowerCase().includes(q) ||
-    d.preview.toLowerCase().includes(q) ||
-    d.tag.toLowerCase().includes(q) ||
-    d.script.toLowerCase().includes(q)
-  );
+function renderCards(){
+  const q=document.getElementById("search").value.toLowerCase().trim();
+  let filtered=data;
+  if(currentTab!=="todos") filtered=filtered.filter(d=>d.type===currentTab);
+  if(q) filtered=filtered.filter(d=>d.title.toLowerCase().includes(q)||d.preview.toLowerCase().includes(q)||d.tag.toLowerCase().includes(q)||d.script.toLowerCase().includes(q));
 
-  document.getElementById("count-badge").textContent = filtered.length + " resultado" + (filtered.length !== 1 ? "s" : "");
+  const regraArea=document.getElementById("regra-area");
+  if(!q&&regras[currentTab]){
+    const r=regras[currentTab];
+    regraArea.innerHTML=`<div class="regra-box ${r.cls}"><strong>${r.title}</strong>${r.text}</div>`;
+  } else { regraArea.innerHTML=""; }
 
-  const container = document.getElementById("cards-container");
-  if (filtered.length === 0) {
-    container.innerHTML = '<div class="empty"><span>🔍</span>Nenhum resultado encontrado.<br>Tente outra palavra-chave.</div>';
-    return;
-  }
-
-  container.innerHTML = filtered.map(item => `
+  document.getElementById("count-badge").textContent=filtered.length+" resultado"+(filtered.length!==1?"s":"");
+  const container=document.getElementById("cards-container");
+  if(!filtered.length){container.innerHTML='<div class="empty"><span>🔍</span>Nenhum resultado encontrado.<br>Tente outra palavra-chave.</div>';return;}
+  container.innerHTML=filtered.map(item=>`
     <div class="card" onclick="openModal(${item.id})">
       <div class="card-header">
         <div class="card-title">${item.title}</div>
         <span class="card-tag ${getTagClass(item.type)}">${item.tag}</span>
       </div>
       <div class="card-preview">${item.preview}</div>
-    </div>
-  `).join("");
+      ${item.when?`<div class="card-when">${item.when}</div>`:""}
+    </div>`).join("");
 }
 
-function openModal(id) {
-  currentItem = data.find(d => d.id === id);
-
-  document.getElementById("modal-title").textContent = currentItem.title;
-
-  const tag = document.getElementById("modal-tag");
-  tag.textContent = getTagLabel(currentItem.type);
-  tag.className = "modal-tag " + getTagClass(currentItem.type);
-
-  const whenEl = document.getElementById("modal-when");
-  if (currentItem.when) {
-    whenEl.textContent = currentItem.when;
-    whenEl.style.display = "block";
-  } else {
-    whenEl.style.display = "none";
-  }
-
-  document.getElementById("modal-body").textContent = currentItem.script;
-
-  const whyEl = document.getElementById("modal-why");
-  if (currentItem.why) {
-    whyEl.textContent = "Por que funciona: " + currentItem.why;
-    whyEl.style.display = "block";
-  } else {
-    whyEl.style.display = "none";
-  }
-
-  const rulesEl = document.getElementById("modal-rules");
-  if (currentItem.rules) {
-    rulesEl.innerHTML = "<strong>Regras de uso</strong>" + currentItem.rules.replace(/\n/g, "<br>");
-    rulesEl.style.display = "block";
-  } else {
-    rulesEl.style.display = "none";
-  }
-
-  const tipEl = document.getElementById("modal-tip");
-  tipEl.style.display = currentItem.type === "followup" ? "none" : "block";
-
-  const btn = document.getElementById("copy-btn");
-  btn.textContent = "Copiar script";
-  btn.classList.remove("copied");
-
+function openModal(id){
+  currentItem=data.find(d=>d.id===id);
+  document.getElementById("modal-title").textContent=currentItem.title;
+  const tag=document.getElementById("modal-tag");
+  tag.textContent=getTagLabel(currentItem.type);
+  tag.className="modal-tag "+getTagClass(currentItem.type);
+  const whenEl=document.getElementById("modal-when");
+  if(currentItem.when){whenEl.textContent=currentItem.when;whenEl.style.display="block";}else whenEl.style.display="none";
+  document.getElementById("modal-body").textContent=currentItem.script;
+  const whyEl=document.getElementById("modal-why");
+  if(currentItem.why){whyEl.textContent="Por que funciona: "+currentItem.why;whyEl.style.display="block";}else whyEl.style.display="none";
+  const rulesEl=document.getElementById("modal-rules");
+  if(currentItem.rules){rulesEl.innerHTML="<strong>Atenção</strong>"+currentItem.rules.replace(/\n/g,"<br>");rulesEl.style.display="block";}else rulesEl.style.display="none";
+  const tipEl=document.getElementById("modal-tip");
+  tipEl.style.display=(currentItem.type==="objection"||currentItem.type==="fechamento")?"block":"none";
+  const btn=document.getElementById("copy-btn");
+  btn.textContent="Copiar script";btn.classList.remove("copied");
   document.getElementById("modal").classList.add("open");
-  document.body.style.overflow = "hidden";
+  document.body.style.overflow="hidden";
 }
 
-function closeModalOutside(e) {
-  if (e.target === document.getElementById("modal")) closeModalDirect();
-}
+function closeModalOutside(e){if(e.target===document.getElementById("modal"))closeModalDirect();}
+function closeModalDirect(){document.getElementById("modal").classList.remove("open");document.body.style.overflow="";}
 
-function closeModalDirect() {
-  document.getElementById("modal").classList.remove("open");
-  document.body.style.overflow = "";
-}
-
-function copyScript() {
-  if (!currentItem) return;
-  navigator.clipboard.writeText(currentItem.script).then(() => {
-    const btn = document.getElementById("copy-btn");
-    btn.textContent = "Copiado!";
-    btn.classList.add("copied");
-    setTimeout(() => {
-      btn.textContent = "Copiar script";
-      btn.classList.remove("copied");
-    }, 2500);
-  }).catch(() => {
-    const ta = document.createElement("textarea");
-    ta.value = currentItem.script;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    document.body.removeChild(ta);
-    document.getElementById("copy-btn").textContent = "Copiado!";
-    setTimeout(() => { document.getElementById("copy-btn").textContent = "Copiar script"; }, 2500);
+function copyScript(){
+  if(!currentItem)return;
+  navigator.clipboard.writeText(currentItem.script).then(()=>{
+    const btn=document.getElementById("copy-btn");btn.textContent="Copiado!";btn.classList.add("copied");
+    setTimeout(()=>{btn.textContent="Copiar script";btn.classList.remove("copied");},2500);
+  }).catch(()=>{
+    const ta=document.createElement("textarea");ta.value=currentItem.script;
+    document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);
+    document.getElementById("copy-btn").textContent="Copiado!";
+    setTimeout(()=>{document.getElementById("copy-btn").textContent="Copiar script";},2500);
   });
 }
 
