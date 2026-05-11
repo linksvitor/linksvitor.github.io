@@ -41,12 +41,19 @@
   .modal-title { font-size: 16px; font-weight: 700; color: #1a1a1a; flex: 1; padding-right: 8px; line-height: 1.4; }
   .close-btn { background: #f0f0f0; border: none; border-radius: 50%; width: 30px; height: 30px; font-size: 16px; cursor: pointer; color: #555; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .modal-tag { font-size: 11px; padding: 3px 10px; border-radius: 10px; font-weight: 600; display: inline-block; margin-bottom: 14px; }
-  .modal-body { font-size: 14px; color: #333; line-height: 1.9; white-space: pre-wrap; background: #f9f8f5; border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; border: 0.5px solid #eee; }
+  .modal-when { font-size: 12px; color: #888; background: #f5f4f0; border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; line-height: 1.5; border-left: 3px solid #ddd; }
+  .modal-when strong { color: #555; }
+  .modal-body { font-size: 14px; color: #333; line-height: 1.9; white-space: pre-wrap; background: #f9f8f5; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; border: 0.5px solid #eee; }
+  .modal-why { font-size: 12px; color: #888; font-style: italic; margin-bottom: 14px; padding: 0 2px; line-height: 1.6; }
   .modal-tip { font-size: 12px; color: #999; margin-bottom: 14px; font-style: italic; }
+  .modal-rules { font-size: 12px; color: #666; background: #f0f4ff; border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; line-height: 1.8; }
+  .modal-rules strong { color: #1A5C9C; display: block; margin-bottom: 4px; }
   .copy-btn { width: 100%; padding: 14px; border-radius: 12px; background: #1a1a1a; color: #fff; border: none; font-size: 15px; font-weight: 600; cursor: pointer; letter-spacing: 0.3px; }
   .copy-btn.copied { background: #2E6010; }
-
   .count-badge { font-size: 12px; color: #aaa; margin-bottom: 4px; }
+
+  /* Stepper visual no modal */
+  .step-pill { display: inline-block; font-size: 10px; font-weight: 700; background: #E6F1FB; color: #1A5C9C; padding: 2px 8px; border-radius: 10px; margin-bottom: 6px; letter-spacing: 0.3px; }
 </style>
 </head>
 <body>
@@ -78,14 +85,18 @@
       <button class="close-btn" onclick="closeModalDirect()">&#x2715;</button>
     </div>
     <span class="modal-tag" id="modal-tag"></span>
+    <div class="modal-when" id="modal-when" style="display:none"></div>
     <div class="modal-body" id="modal-body"></div>
-    <div class="modal-tip">Substitua [nome] pelo nome real do cliente antes de enviar.</div>
+    <div class="modal-why" id="modal-why" style="display:none"></div>
+    <div class="modal-rules" id="modal-rules" style="display:none"></div>
+    <div class="modal-tip" id="modal-tip">Substitua [nome] pelo nome real do cliente antes de enviar.</div>
     <button class="copy-btn" onclick="copyScript()" id="copy-btn">Copiar script</button>
   </div>
 </div>
 
 <script>
 const data = [
+  // ── OBJEÇÕES ──────────────────────────────────────────────────────────────
   {
     id: 1, type: "objection", tag: "Confiança na loja",
     title: "Cliente desconfia da loja",
@@ -176,56 +187,324 @@ Pra garantir que dure bastante, o ideal é tirar antes do banho e guardar num lo
 
 Com esse cuidado simples, a peça dura muito mais e continua linda por muito tempo. 😊`
   },
-  {
-    id: 10, type: "followup", tag: "D0 — 2 a 4h",
-    title: "Follow-up D0 — cliente sumiu no mesmo dia",
-    preview: "Mandar 2 a 4 horas após o cliente parar de responder",
-    script: `Oiii [nome], conseguiu ver o que eu te mandei ali em cima?
 
-Se quiser, posso te mandar fotos dos modelos que mais saem aqui na loja pra você dar uma olhadinha 🙂`
+  // ── FOLLOW-UP — 1. LEADS NOVOS (CURTO) ───────────────────────────────────
+  {
+    id: 10, type: "followup", tag: "Leads novos · D0",
+    title: "Follow-up leads novos — D0 (2 a 4h depois)",
+    preview: "Cliente sumiu no mesmo dia. Mandar 2 a 4h após parar de responder.",
+    when: "⏱ Quando usar: 2 a 4 horas depois que o cliente parou de responder no primeiro contato.",
+    script: `Oi [nome], conseguiu ouvir meu áudio? 😄
+
+Posso te mandar foto dos modelos mais pedidos aqui pra você dar uma olhada!`,
+    why: "Tom leve, sem cobrar. Só reabre a conversa com uma pergunta simples.",
+    rules: `REGRA GERAL — Leads novos (curto):
+• Cadência de 5 tentativas em 6 dias
+• Se o cliente responder em qualquer etapa, para o funil e atende normalmente
+• Sempre adaptar [nome] e o produto da conversa
+• Após D6 sem resposta → mover pra etiqueta PERDIDO`
   },
   {
-    id: 11, type: "followup", tag: "D1 — 1 dia",
-    title: "Follow-up D1 — 1 dia depois",
-    preview: "Mandar 1 dia após o primeiro contato",
-    script: `Boa tarde, [nome]!
+    id: 11, type: "followup", tag: "Leads novos · D1",
+    title: "Follow-up leads novos — D1 (1 dia depois)",
+    preview: "Gatilho: desconto especial no Pix para primeira compra.",
+    when: "⏱ Quando usar: 1 dia após o primeiro contato sem resposta.",
+    script: `Oi [nome], esqueci de te falar! 😅
 
-Esqueci de te falar ontem — na sua primeira compra, se o pagamento for no Pix, ainda consigo te dar um desconto especial 😊
-
-Basta escolher o modelo do seu interesse que te passo quanto fica com o desconto.`
+Na primeira compra no Pix ainda consigo um descontinho especial pra você. Escolhe o modelo e te passo o valor! 😊`,
+    why: "O desconto no Pix é um gatilho real e concreto — não é pressão, é uma vantagem que ele ainda pode aproveitar.",
+    rules: `REGRA GERAL — Leads novos (curto):
+• Cadência de 5 tentativas em 6 dias
+• Se o cliente responder em qualquer etapa, para o funil e atende normalmente
+• Sempre adaptar [nome] e o produto da conversa
+• Após D6 sem resposta → mover pra etiqueta PERDIDO`
   },
   {
-    id: 12, type: "followup", tag: "D3 — 3 dias",
-    title: "Follow-up D3 — 3 dias depois",
-    preview: "Mandar foto da peça com mensagem leve e descontraída",
-    script: `[Manda uma foto da peça que ele demonstrou interesse e escreve:]
+    id: 12, type: "followup", tag: "Leads novos · D3",
+    title: "Follow-up leads novos — D3 (3 dias depois)",
+    preview: "Gatilho: humor + foto do produto de interesse.",
+    when: "⏱ Quando usar: 3 dias após o primeiro contato sem resposta. Mandar junto com foto ou vídeo da peça.",
+    script: `[foto do produto]
 
-Saudades do que a gente não viveu ainda... 😄
+Saudades do que a gente não viveu ainda, [nome] 😂
 
-Aqui te esperando, [nome]!`
+Tá te esperando aqui!`,
+    why: "Tom descontraído e engraçado. Não cobra, não pressiona — só lembra com leveza. A foto reativa o desejo visual.",
+    rules: `REGRA GERAL — Leads novos (curto):
+• Cadência de 5 tentativas em 6 dias
+• Se o cliente responder em qualquer etapa, para o funil e atende normalmente
+• Sempre adaptar [nome] e o produto da conversa
+• Após D6 sem resposta → mover pra etiqueta PERDIDO`
   },
   {
-    id: 13, type: "followup", tag: "D4 — 4 dias",
-    title: "Follow-up D4 — 4 dias depois (oferta)",
-    preview: "Oferta com urgência — válida só hoje",
-    script: `[Manda uma foto do produto e escreve:]
+    id: 13, type: "followup", tag: "Leads novos · D4",
+    title: "Follow-up leads novos — D4 (oferta relâmpago)",
+    preview: "Oferta com prazo — válida só hoje. Preencher os valores reais.",
+    when: "⏱ Quando usar: 4 dias após o primeiro contato sem resposta. Mandar junto com foto do produto.",
+    script: `[foto do produto]
 
-Mas cara, esqueceu de mim né? kkk — mas eu lembrei de você! 😊
+Esqueceu de mim né? kkk Mas eu não esqueci de você! 😄
 
-To com uma condição especial no modelo que você tem interesse. Hoje ele tá saindo de R$[valor original] por apenas R$[valor com desconto], mas essa condição é válida só hoje 😉
+Tô com uma condição especial nesse modelo hoje: de R$[X] por R$[Y]. Só hoje! Posso separar a sua? 🔥`,
+    why: "Urgência real com prazo de 1 dia. O humor no começo quebra o gelo antes de apresentar a oferta.",
+    rules: `ATENÇÃO: preencher R$[X] e R$[Y] com os valores reais do produto antes de enviar.
 
-Posso separar a sua?`
+REGRA GERAL — Leads novos (curto):
+• Cadência de 5 tentativas em 6 dias
+• Se o cliente responder em qualquer etapa, para o funil e atende normalmente
+• Após D6 sem resposta → mover pra etiqueta PERDIDO`
   },
   {
-    id: 14, type: "followup", tag: "D6 — encerramento",
-    title: "Follow-up D6 — última tentativa",
-    preview: "6 dias após o primeiro contato — encerrar com elegância",
-    script: `Oi [nome], pelos contatos sem resposta, entendo que você não tem mais interesse na oferta especial.
-
-Então estou finalizando meu contato por aqui 🙁
-
-Se mudar de ideia, é só me chamar. Obrigada!`
+    id: 14, type: "followup", tag: "Leads novos · D6",
+    title: "Follow-up leads novos — D6 (encerramento)",
+    preview: "Última tentativa. Fechar com elegância e porta aberta.",
+    when: "⏱ Quando usar: 6 dias após o primeiro contato sem resposta. Última mensagem do funil.",
+    script: `Oii [nome], pelos contatos sem resposta entendo que você não tem mais interesse na oferta especial, então estou finalizando meu contato por aqui ☹️`,
+    why: "Encerramento com porta aberta. Não implora, não pressiona. Se ele quiser voltar, sabe que pode.",
+    rules: `Após enviar essa mensagem sem resposta → arquivar o lead com etiqueta PERDIDO.`
   },
+
+  // ── FOLLOW-UP — 2. RECUPERAÇÃO DE PAGAMENTO PENDENTE ─────────────────────
+  {
+    id: 20, type: "followup", tag: "Pgto pendente · Passo 1",
+    title: "Pgto pendente — Passo 1 (foto na caixinha)",
+    preview: "Cliente confirmou pedido mas sumiu sem pagar. Mandar após 15 min.",
+    when: "⏱ Quando usar: 15 minutos após mandar o formulário, independente de ter preenchido. Tirar foto ou vídeo do produto já na caixinha e mandar junto.",
+    script: `[nome], já separei aqui o seu! 📦
+
+Quando fizer o pagamento, me manda o comprovante que eu já embalo e despacho o quanto antes! 😄`,
+    why: "A foto do produto na caixinha é o gatilho principal — prova que o pedido é real e já está separado. Gera urgência sem precisar falar nada.",
+    rules: `REGRA GERAL — Recuperação de pagamento pendente:
+• Se o cliente responder em qualquer etapa, para o funil e atende normalmente
+• Fluxo: Foto na caixinha → aguarda → retornou com desculpa → videochamada → sumiu → mensagem manhã seguinte → sem resposta → encerramento com escassez → arquiva`
+  },
+  {
+    id: 21, type: "followup", tag: "Pgto pendente · Passo 2A",
+    title: "Pgto pendente — Passo 2A (retornou com desculpa)",
+    preview: "Cliente respondeu mas deu desculpa ou ficou inseguro.",
+    when: "⏱ Quando usar: se o cliente responder com desculpa ou demonstrar insegurança após o Passo 1.",
+    script: `[nome], vamos fazer uma chamada de vídeo rápida agora? ☺️
+
+Já pra você ver a qualidade do produto e adquirir tranquilo sabendo que vai chegar certinho na sua casa. 🙏`,
+    why: "Mandou a mensagem → espera 2 minutos → faz a chamada. Ele atendendo ou não, a iniciativa já quebra a objeção.",
+    rules: `Após mandar: espera 2 minutos e faz a chamada de vídeo.
+Se ele atender ou não → a iniciativa já quebra a objeção.`
+  },
+  {
+    id: 22, type: "followup", tag: "Pgto pendente · Passo 2B",
+    title: "Pgto pendente — Passo 2B (sumiu sem resposta)",
+    preview: "Cliente não respondeu nada. Mandar no dia seguinte de manhã.",
+    when: "⏱ Quando usar: se o cliente sumiu sem responder após o Passo 1. Mandar no dia seguinte pela manhã.",
+    script: `Bom dia, [nome]! ☺️
+
+Seu pedido ainda tá separado aqui. Consegue confirmar o pagamento hoje? Assim já despacho ainda hoje pelos Correios! 📦🚀`,
+    why: "\"Despacho ainda hoje\" cria urgência real — ele sabe que a compra resolve rápido se agir agora.",
+    rules: `Mandar pela manhã do dia seguinte ao Passo 1.`
+  },
+  {
+    id: 23, type: "followup", tag: "Pgto pendente · Passo 3",
+    title: "Pgto pendente — Passo 3 (encerramento com escassez)",
+    preview: "Sem resposta após o dia seguinte. Última tentativa com escassez.",
+    when: "⏱ Quando usar: sem resposta após o Passo 2B. Última mensagem do funil de pagamento pendente.",
+    script: `Opa [nome], tudo bem? 😊
+
+Vou ter que liberar o estoque aqui — devido à promoção, tô com apenas 3 últimas unidades desse modelo que você tinha escolhido.
+
+Não consigo segurar por muito mais tempo. Mas se ainda tiver interesse, é só me chamar que vejo o que consigo fazer por você. 🙏`,
+    why: "\"3 últimas unidades\" é escassez específica — número concreto converte mais que \"poucas unidades\".",
+    rules: `Após essa mensagem sem resposta → arquivar o lead.`
+  },
+
+  // ── FOLLOW-UP — 3. RECUPERAÇÃO DE LEADS FRIOS ────────────────────────────
+  {
+    id: 30, type: "followup", tag: "Lead frio · Msg 1",
+    title: "Lead frio — Mensagem 1 (novidade)",
+    preview: "15+ dias de silêncio total. Reabre sem pressão com produto novo.",
+    when: "⏱ Quando usar: após 15 dias de silêncio total do lead, sem nenhuma resposta. Mandar com foto ou vídeo de produto novo ou combinação diferente.",
+    script: `Ei [nome], sumido! 😏
+
+Lembrei de você aqui! Porque chegou uma peça/combinação nova que combina muito com o seu estilo.
+
+[foto/vídeo]
+
+Quis te mostrar antes de todo mundo. Quer ver mais? 😊`,
+    why: "\"Lembrei de você\" soa como atenção genuína, não tentativa de venda. Tom leve, sem cobrar resposta.",
+    rules: `REGRA GERAL — Leads frios:
+• Só ativar após 15 dias de silêncio total
+• NÃO oferecer desconto — o follow-up anterior já usou esse gatilho
+• Usar o contexto da conversa anterior sempre que possível
+• Se responder em qualquer etapa, atende normalmente
+• Após Mensagem 3 sem resposta → arquiva o lead`
+  },
+  {
+    id: 31, type: "followup", tag: "Lead frio · Msg 2",
+    title: "Lead frio — Mensagem 2 (prova social)",
+    preview: "2 dias sem resposta após Msg 1. Manda print de elogio ou foto de cliente.",
+    when: "⏱ Quando usar: 2 dias após a Mensagem 1 sem resposta. Mandar com print de elogio ou foto/vídeo de cliente usando o produto.",
+    script: `Ô [nome], olha o que chegou aqui hoje 😄👇
+
+[print/vídeo do elogio ou foto do cliente usando]
+
+Essa que ela adquiriu é do mesmo modelo que a gente tinha conversado antes. Quem adquire nossa qualidade não se arrepende. 😉🥇
+
+Te mando foto dos modelos disponíveis se quiser dar uma olhadinha melhor 😊`,
+    why: "\"A gente tinha conversado\" usa o contexto da conversa anterior — muito mais forte que mensagem genérica.",
+    rules: `REGRA GERAL — Leads frios:
+• Só ativar após 15 dias de silêncio total
+• NÃO oferecer desconto
+• Se responder → atende normalmente
+• Após Mensagem 3 sem resposta → arquiva o lead`
+  },
+  {
+    id: 32, type: "followup", tag: "Lead frio · Msg 3",
+    title: "Lead frio — Mensagem 3 (encerramento leve)",
+    preview: "3 dias sem resposta após Msg 2. Última tentativa, sem desconto.",
+    when: "⏱ Quando usar: 3 dias após a Mensagem 2 sem resposta. Última mensagem do funil de leads frios.",
+    script: `Oi [nome]! Prometo que essa é a última vez que vou te chamar por aqui 😄
+
+Sei que a vida é corrida e talvez o momento não seja esse mesmo.
+
+Mas fica à vontade pra me chamar quando quiser que eu te atendo na hora. 😉`,
+    why: "Tirar a pressão muitas vezes faz o cliente responder. Deixa a porta aberta sem implorar pela venda.",
+    rules: `Após essa mensagem sem resposta → arquivar o lead.`
+  },
+
+  // ── FOLLOW-UP — 4. PÓS-VENDA, RECOMPRA E INDICAÇÃO ──────────────────────
+  {
+    id: 40, type: "followup", tag: "Pós-venda · Envio",
+    title: "Pós-venda 1 — Confirmação de envio",
+    preview: "Enviar assim que despachar, junto com foto do produto na caixa.",
+    when: "⏱ Quando usar: assim que o pedido for despachado. Mandar junto com foto do produto na caixinha.",
+    script: `[nome], boa notícia! 🚀
+
+Seu pedido acabou de ser despachado!
+
+Código de rastreio: [CODIGO]
+Prazo estimado: [X] dias úteis
+
+Qualquer coisa tô aqui. Vai ficar incrível em você! 🔥`,
+    why: "Confirma a entrega, passa o rastreio e já aquece o cliente pra recompra futura.",
+    rules: `Preencher [CODIGO] e [X] com os dados reais antes de enviar.`
+  },
+  {
+    id: 41, type: "followup", tag: "Pós-venda · Entrega",
+    title: "Pós-venda 2 — Confirmação de entrega",
+    preview: "2 dias após o prazo estimado. Pedir foto do cliente usando.",
+    when: "⏱ Quando usar: 2 dias após o prazo estimado de entrega.",
+    script: `Oi [nome], chegou tudo certinho aí? 😄
+
+Se puder me manda uma foto — pode ser mostrando que recebeu o produto ou usando ele mesmo. A gente costuma postar mostrando que chegou certinho pros clientes! 📸🔥`,
+    why: "Pede foto de forma natural. Gera conteúdo pra perfil e cria vínculo com o cliente.",
+    rules: `Se ele mandar a foto → aproveitar pra stories/destaques (com permissão).`
+  },
+  {
+    id: 42, type: "followup", tag: "Pós-venda · Aquecimento",
+    title: "Pós-venda 3 — Atenção e aquecimento",
+    preview: "10 dias após a entrega. Reabre com novidade e tom descontraído.",
+    when: "⏱ Quando usar: 10 dias após a entrega.",
+    script: `Ei [nome], tudo bem? 😊
+
+Fico pensando nos clientes depois que o pedido sai daqui kkk — já tá usando?
+
+Chegou coisa nova aqui que combina demais com o que você levou. Posso te mostrar? 🔥`,
+    why: "Tom humano e descontraído. Não é venda direta — é relacionamento que leva à recompra.",
+    rules: `Janela de ouro: entre a entrega e 3 meses. Aproveitar enquanto o cliente está satisfeito.`
+  },
+  {
+    id: 43, type: "followup", tag: "Pós-venda · Recompra",
+    title: "Pós-venda 4 — Oferta de recompra + indicação",
+    preview: "20 dias após a entrega. Produto novo + programa de indicação.",
+    when: "⏱ Quando usar: 20 dias após a entrega. Mandar com foto ou vídeo de produto novo.",
+    script: `Oi [nome]! 😄
+
+Lembrei de você porque chegou uma peça nova aqui que combina demais com o que você levou.
+
+[foto/vídeo]
+
+E se tiver algum amigo que curte esse estilo — manda meu contato! Se ele comprar acima de R$174,90, você já garante 10% de desconto na próxima compra. 🤝🔥`,
+    why: "Junta recompra + indicação em uma mensagem só. O desconto por indicação é um incentivo concreto e fácil de entender.",
+    rules: `Programa de indicação:
+• Indicado precisa comprar acima de R$174,90
+• 10% de desconto por indicação, acumulativo até 30% (máx. 3 indicações)
+• Desconto não acumula com outras promoções
+• Avisar o cliente assim que a indicação fechar`
+  },
+  {
+    id: 44, type: "followup", tag: "Pós-venda · Oferta VIP",
+    title: "Recompra 2 — Oferta exclusiva para cliente",
+    preview: "Sem reação ao PV4. Manda após mais 15 dias com condição especial.",
+    when: "⏱ Quando usar: se o cliente não reagiu ao Pós-venda 4. Mandar 15 dias depois com foto/vídeo.",
+    script: `Oi [nome]! 😊
+
+Tenho uma condição especial aqui só pro pessoal que já é cliente.
+
+[foto/vídeo]
+
+Esse modelo tá saindo por R$[VALOR]. Quer que eu reserve um pra você? 🙏`,
+    why: "\"Só pro pessoal que já é cliente\" cria exclusividade real para quem já comprou.",
+    rules: `Preencher R$[VALOR] com o preço real antes de enviar.`
+  },
+  {
+    id: 45, type: "followup", tag: "Pós-venda · Brinde",
+    title: "Recompra 3 — Gatilho do brinde",
+    preview: "Cliente demonstrou interesse mas hesitou no valor.",
+    when: "⏱ Quando usar: cliente demonstrou interesse na recompra mas travou no preço.",
+    script: `Ah [nome], esqueci de te falar! 😄
+
+Se o seu pedido fechar acima de R$[VALOR], eu mando uma correntinha de brinde junto pra você. Totalmente grátis!
+
+Quer ver o que dá pra montar? 😊`,
+    why: "O brinde muda o foco do preço para o ganho. Cliente compara \"pago X e ganho Y\" em vez de só focar no custo.",
+    rules: `Preencher R$[VALOR] com o valor mínimo do pedido para o brinde ser aplicado.`
+  },
+  {
+    id: 46, type: "followup", tag: "Pós-venda · Indicação ok",
+    title: "Indicação confirmada — avisar quem indicou",
+    preview: "Enviar assim que o indicado finalizar o pedido.",
+    when: "⏱ Quando usar: assim que o cliente indicado fechar o pedido. Avisar imediatamente quem fez a indicação.",
+    script: `Oiii [nome]!
+
+Seu amigo [nome do indicado] acabou de garantir o pedido dele aqui!
+
+Seu 10% de desconto já tá garantido — é só me chamar quando quiser usar, no que você quiser. 😄🙏`,
+    why: "Avisar na hora reforça a credibilidade do programa e incentiva novas indicações.",
+    rules: `Substituir [nome do indicado] pelo nome real.
+Desconto não acumula com outras promoções.`
+  },
+
+  // ── FOLLOW-UP — 5. UPSELL ─────────────────────────────────────────────────
+  {
+    id: 50, type: "followup", tag: "Upsell · Abordagem",
+    title: "Upsell — Oferecer peça complementar",
+    preview: "Cliente confirmou a compra. Oferecer peça combinando com desconto especial.",
+    when: "⏱ Quando usar: SOMENTE após o cliente confirmar a compra com frases como \"Vou querer, manda o Pix\", \"Pode separar\" ou \"Vou mandar o endereço\". NUNCA antes.",
+    script: `Eita [nome], esqueci de te dizer — a gente tem a pulseirinha desse mesmo modelo da corrente! 😄
+
+[foto da pulseira]
+
+Ela tá saindo na promoção de [preço cheio] ❌ por apenas [preço promocional] ✅
+
+Mas como você já vai garantir a corrente agora, consigo fazer uma condição especial pra você levar o kit completo.
+
+Adquirindo a pulseira hoje, deixo ela pra você por apenas [preço upsell] 🔥
+
+Essa condição é só porque você já está garantindo a corrente agora — se for em outro momento, volta ao preço normal.
+
+Posso adicionar ela no seu pedido? 😊`,
+    why: "O cliente compara mentalmente o preço cheio com o preço upsell — quase metade do valor. Isso torna a decisão fácil.",
+    rules: `Como preencher os preços:
+• [preço cheio] → preço original da pulseira. Ex: R$189,90
+• [preço promocional] → oferta do momento. Ex: R$124,90
+• [preço upsell] → desconto extra de R$30–35. Ex: R$95,00
+
+Regras:
+1. Só mandar DEPOIS da confirmação de compra. Nunca antes.
+2. Mandar a foto da pulseira junto. Sem foto não há desejo.
+3. Se hesitar: "Sem problema! Mas lembra que esse valor especial é só hoje por você já estar garantindo a corrente 😊"
+4. Adaptar pra outros combos: corrente + pingente, pulseira + anel, peça + perfume árabe.`
+  },
+
+  // ── FECHAMENTO ────────────────────────────────────────────────────────────
   {
     id: 15, type: "fechamento", tag: "Urgência / escassez",
     title: "Gerar urgência pra fechar",
@@ -266,8 +545,10 @@ Caso tenha interesse, me confirma rápido pra eu garantir a sua. 😊`
 
 Assim consigo te indicar a que mais vai combinar com seu estilo. 😊`
   },
+
+  // ── DORES ─────────────────────────────────────────────────────────────────
   {
-    id: 20, type: "dor", tag: "Medo de bijuteria barata",
+    id: 60, type: "dor", tag: "Medo de bijuteria barata",
     title: "Medo de parecer bijuteria / coisa de qualidade baixa",
     preview: "\"Na foto é bonito, mas ao vivo deve ser fraco\"",
     script: `O cliente quer usar acessório pra parecer mais alinhado e com mais presença. O maior medo é colocar no corpo e ficar com cara de coisa barata.
@@ -280,7 +561,7 @@ Como quebrar esse medo:
 → Oferece videochamada se ele insistir em duvidar`
   },
   {
-    id: 21, type: "dor", tag: "Medo de desbotar",
+    id: 61, type: "dor", tag: "Medo de desbotar",
     title: "Medo de a peça desbotar ou descascar",
     preview: "\"Quanto tempo dura? Vai perder a cor?\"",
     script: `Esse é o medo racional mais forte. Ele já comprou peça ruim antes e entra desconfiado.
@@ -292,7 +573,7 @@ Como quebrar esse medo:
 → Se tiver garantia, reforça isso com segurança`
   },
   {
-    id: 22, type: "dor", tag: "Medo de não combinar",
+    id: 62, type: "dor", tag: "Medo de não combinar",
     title: "Medo de não combinar com o estilo dele",
     preview: "\"Não sou acostumado a usar acessório\"",
     script: `Ele não quer "usar acessório" — ele quer "ter mais presença". Não quer parecer artificial.
@@ -304,7 +585,7 @@ Como quebrar esse medo:
 → Diz que é uma das que mais saem pra homens com o perfil dele`
   },
   {
-    id: 23, type: "dor", tag: "Medo de golpe",
+    id: 63, type: "dor", tag: "Medo de golpe",
     title: "Medo de tomar golpe / loja não confiável",
     preview: "Objeção silenciosa — ele não fala mas pensa",
     script: `Essa objeção raramente é falada, mas trava muito — principalmente no Instagram.
@@ -316,7 +597,7 @@ Como quebrar esse medo:
 → Reforça: "pode checar nosso perfil, temos muitos clientes atendidos"`
   },
   {
-    id: 24, type: "dor", tag: "Medo de pagar e não valer",
+    id: 64, type: "dor", tag: "Medo de pagar e não valer",
     title: "Medo de pagar e não valer o preço",
     preview: "\"É bonito, mas vale isso mesmo?\"",
     script: `Como semijoia não é necessidade, ela precisa parecer justificável pro cliente.
@@ -381,14 +662,46 @@ function renderCards() {
 
 function openModal(id) {
   currentItem = data.find(d => d.id === id);
+
   document.getElementById("modal-title").textContent = currentItem.title;
+
   const tag = document.getElementById("modal-tag");
   tag.textContent = getTagLabel(currentItem.type);
   tag.className = "modal-tag " + getTagClass(currentItem.type);
+
+  const whenEl = document.getElementById("modal-when");
+  if (currentItem.when) {
+    whenEl.textContent = currentItem.when;
+    whenEl.style.display = "block";
+  } else {
+    whenEl.style.display = "none";
+  }
+
   document.getElementById("modal-body").textContent = currentItem.script;
+
+  const whyEl = document.getElementById("modal-why");
+  if (currentItem.why) {
+    whyEl.textContent = "Por que funciona: " + currentItem.why;
+    whyEl.style.display = "block";
+  } else {
+    whyEl.style.display = "none";
+  }
+
+  const rulesEl = document.getElementById("modal-rules");
+  if (currentItem.rules) {
+    rulesEl.innerHTML = "<strong>Regras de uso</strong>" + currentItem.rules.replace(/\n/g, "<br>");
+    rulesEl.style.display = "block";
+  } else {
+    rulesEl.style.display = "none";
+  }
+
+  const tipEl = document.getElementById("modal-tip");
+  tipEl.style.display = currentItem.type === "followup" ? "none" : "block";
+
   const btn = document.getElementById("copy-btn");
   btn.textContent = "Copiar script";
   btn.classList.remove("copied");
+
   document.getElementById("modal").classList.add("open");
   document.body.style.overflow = "hidden";
 }
